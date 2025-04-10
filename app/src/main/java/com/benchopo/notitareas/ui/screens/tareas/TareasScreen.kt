@@ -19,6 +19,14 @@ import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
 import com.benchopo.notitareas.ui.components.DropdownMenuBox
 import java.util.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.Alignment
+import com.benchopo.notitareas.ui.components.SnackbarComponent
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun TareasScreen(
@@ -30,106 +38,227 @@ fun TareasScreen(
     var fechaEntrega by remember { mutableStateOf("") }
     var materiaSeleccionada by remember { mutableStateOf("") }
 
-    val materias = materiasViewModel.materias
+    val materiasNombres: List<String> = materiasViewModel.materias.map { it.nombre }
     val context = LocalContext.current
-
     val calendario = Calendar.getInstance()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp).padding(top = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
-        // Titulo de la app
+    LaunchedEffect(snackbarMessage) {
+        snackbarMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            snackbarMessage = null
+        }
+    }
 
-        Text("NotiTareas 😎✔", style = MaterialTheme.typography.headlineLarge)
-
-
-        Text("Registrar Tarea", style = MaterialTheme.typography.headlineSmall)
-
-        OutlinedTextField(
-            value = titulo,
-            onValueChange = { titulo = it },
-            label = { Text("Título") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = descripcion,
-            onValueChange = { descripcion = it },
-            label = { Text("Descripción") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Button(onClick = {
-            val datePicker = DatePickerDialog(
-                context,
-                { _: DatePicker, year: Int, month: Int, day: Int ->
-                    fechaEntrega = "$day/${month + 1}/$year"
-                },
-                calendario.get(Calendar.YEAR),
-                calendario.get(Calendar.MONTH),
-                calendario.get(Calendar.DAY_OF_MONTH)
+    @Composable
+    fun AppTitle() {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    Brush.linearGradient(
+                        listOf(Color(0xFF4710EE), Color(0xFF9031CB))
+                    ), shape = RoundedCornerShape(30.dp)
+                )
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "NotiTareas 😎✔",
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
-            datePicker.show()
-        }) {
-            Text(if (fechaEntrega.isEmpty()) "Seleccionar fecha" else fechaEntrega)
         }
+    }
 
-        DropdownMenuBox(
-            items = materias,
-            selectedItem = materiaSeleccionada,
-            onItemSelected = { materiaSeleccionada = it }
-        )
+    Box(modifier = Modifier.fillMaxSize()) {
+        SnackbarComponent(snackbarHostState)
 
-        Button(
-            onClick = {
-                val tarea = Tarea(titulo, descripcion, fechaEntrega, materiaSeleccionada)
-                tareasViewModel.agregarTarea(tarea)
-                titulo = ""
-                descripcion = ""
-                fechaEntrega = ""
-                materiaSeleccionada = ""
-            },
-            enabled = titulo.isNotBlank() && materiaSeleccionada.isNotBlank()
-        ) {
-            Text("Guardar Tarea")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text("Tareas registradas:", style = MaterialTheme.typography.titleMedium)
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .padding(top = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            tareasViewModel.tareas.forEach { tarea ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .background(
-                                brush = Brush.linearGradient(
-                                    listOf(Color(0xFF52B2FF), Color(0xFF69FFC6))
-                                )
-                            )
-                            .padding(16.dp).fillMaxWidth(),
+            AppTitle()
+
+            Text("Registrar Tarea", style = MaterialTheme.typography.headlineSmall)
+
+            OutlinedTextField(
+                value = titulo,
+                onValueChange = { titulo = it },
+                label = { Text("Título") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = descripcion,
+                onValueChange = { descripcion = it },
+                label = { Text("Descripción") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Button(onClick = {
+                val datePicker = DatePickerDialog(
+                    context,
+                    { _: DatePicker, year: Int, month: Int, day: Int ->
+                        fechaEntrega = "$day/${month + 1}/$year"
+                    },
+                    calendario.get(Calendar.YEAR),
+                    calendario.get(Calendar.MONTH),
+                    calendario.get(Calendar.DAY_OF_MONTH)
+                )
+                datePicker.show()
+            }) {
+                Text(if (fechaEntrega.isEmpty()) "Seleccionar fecha" else fechaEntrega)
+            }
+
+            DropdownMenuBox(
+                items = materiasNombres,
+                selectedItem = materiaSeleccionada,
+                onItemSelected = { materiaSeleccionada = it }
+            )
+
+            Button(
+                onClick = {
+                    val tarea = Tarea(
+                        titulo = titulo,
+                        descripcion = descripcion,
+                        fechaEntrega = fechaEntrega,
+                        materia = materiaSeleccionada
+                    )
+                    tareasViewModel.agregarTarea(tarea)
+                    titulo = ""
+                    descripcion = ""
+                    fechaEntrega = ""
+                    materiaSeleccionada = ""
+                },
+                enabled = titulo.isNotBlank() && materiaSeleccionada.isNotBlank()
+            ) {
+                Text("Guardar Tarea")
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Text("Tareas registradas:", style = MaterialTheme.typography.titleMedium)
+
+            val materiasDisponibles = tareasViewModel.obtenerMateriasUnicas()
+            val materiasFiltradas = tareasViewModel.materiasFiltradas
+            val tareasFiltradas = tareasViewModel.obtenerTareasFiltradas()
+            val ordenarPorFechaAsc = tareasViewModel.ordenarPorFechaAscendente.value
+
+            Text("Filtrar por materia:", style = MaterialTheme.typography.titleMedium)
+            if (materiasDisponibles.isEmpty()) {
+                Text("No hay filtros disponibles.")
+            }
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(materiasDisponibles) { materia ->
+                    AssistChip(
+                        onClick = { tareasViewModel.alternarFiltroMateria(materia) },
+                        label = { Text(materia) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            // Color con gradiente cuando esta seleccionada
+                            containerColor = if (materiasFiltradas.contains(materia)) Color(
+                                0xFF5629D9
+                            ) else Color.DarkGray,
+                            labelColor = Color.White
+                        )
+                    )
+                }
+            }
+
+            Button(
+                onClick = { tareasViewModel.toggleOrdenPorFecha() },
+                modifier = Modifier.padding(vertical = 8.dp)
+            ) {
+                Text(if (ordenarPorFechaAsc) "Quitar orden por fecha" else "Ordenar por fecha más próxima")
+            }
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(tareasFiltradas) { tarea ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(text = tarea.titulo, color = Color.White, fontWeight = FontWeight.Bold)
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Materia: ${tarea.materia}", color = Color.White)
-                        Text(text = "Entrega: ${tarea.fechaEntrega}", color = Color.White)
-                        if (tarea.descripcion.isNotBlank()) {
-                            Text(text = "Descripción: ${tarea.descripcion}", color = Color.White)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    brush = if (tarea.completada)
+                                        Brush.linearGradient(
+                                            listOf(
+                                                Color(0xFF0063B6),
+                                                Color(0xFF04754C)
+                                            )
+                                        )
+                                    else
+                                        Brush.linearGradient(
+                                            listOf(
+                                                Color(0xFF888888),
+                                                Color(0xFFFF5722)
+                                            )
+                                        )
+                                )
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column {
+                                Text(
+                                    text = tarea.titulo,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(text = "Materia: ${tarea.materia}", color = Color.White)
+                                Text(text = "Entrega: ${tarea.fechaEntrega}", color = Color.White)
+                                if (tarea.descripcion.isNotBlank()) {
+                                    Text(
+                                        text = "Descripción: ${tarea.descripcion}",
+                                        color = Color.White
+                                    )
+                                }
+                            }
+
+                            IconButton(onClick = {
+                                tareasViewModel.eliminarTarea(tarea)
+                                snackbarMessage = "Tarea eliminada correctamente"
+                            }) {
+                                Icon(
+                                    Icons.Default.Delete,
+                                    contentDescription = "Eliminar tarea",
+                                    tint = Color.White
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+                                    tareasViewModel.marcarComoCompletada(tarea)
+                                    snackbarMessage = "Tarea marcada como completada 🎉"
+                                },
+                                enabled = !tarea.completada
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = "Marcar como completada",
+                                    tint = Color.White
+                                )
+                            }
                         }
                     }
                 }
             }
         }
-
     }
 }
