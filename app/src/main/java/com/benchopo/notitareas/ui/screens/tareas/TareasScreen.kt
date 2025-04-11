@@ -23,7 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.Alignment
-import com.benchopo.notitareas.ui.components.SnackbarComponent
+import com.benchopo.notitareas.ui.components.Snackbar
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -54,7 +54,7 @@ fun TareasScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        SnackbarComponent(snackbarHostState)
+        Snackbar(snackbarHostState)
 
         Column(
             modifier = Modifier
