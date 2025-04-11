@@ -16,8 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.benchopo.notitareas.ui.theme.NotiTareasTheme
 import com.benchopo.notitareas.viewModel.MateriasViewModel
-import com.benchopo.notitareas.ui.components.Snackbar
+import com.benchopo.notitareas.ui.components.SnackbarComponent
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -50,7 +51,7 @@ fun MateriasScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Snackbar(snackbarHostState)
+        SnackbarComponent(snackbarHostState)
 
         Column(
             modifier = Modifier
