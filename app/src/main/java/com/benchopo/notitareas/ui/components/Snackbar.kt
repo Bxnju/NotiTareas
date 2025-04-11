@@ -1,15 +1,12 @@
 package com.benchopo.notitareas.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
@@ -22,7 +19,7 @@ fun rememberSnackbarHostState(): SnackbarHostState {
 }
 
 @Composable
-fun SnackbarComponent(snackbarHostState: SnackbarHostState) {
+fun Snackbar(snackbarHostState: SnackbarHostState) {
     val snackbarData = snackbarHostState.currentSnackbarData
     var isVisible by remember { mutableStateOf(false) }
     var dismissed by remember { mutableStateOf(false) }
