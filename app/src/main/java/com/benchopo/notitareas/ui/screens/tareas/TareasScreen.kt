@@ -27,6 +27,7 @@ import com.benchopo.notitareas.ui.components.SnackbarComponent
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import com.benchopo.notitareas.ui.components.AppTitle
 
 @Composable
 fun TareasScreen(
@@ -49,28 +50,6 @@ fun TareasScreen(
         snackbarMessage?.let {
             snackbarHostState.showSnackbar(it)
             snackbarMessage = null
-        }
-    }
-
-    @Composable
-    fun AppTitle() {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    Brush.linearGradient(
-                        listOf(Color(0xFF4710EE), Color(0xFF9031CB))
-                    ), shape = RoundedCornerShape(30.dp)
-                )
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "NotiTareas 😎✔",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
 
