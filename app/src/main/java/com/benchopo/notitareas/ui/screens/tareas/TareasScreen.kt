@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -27,6 +28,8 @@ import com.benchopo.notitareas.ui.components.Snackbar
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import com.benchopo.notitareas.ui.components.AppTitle
 
 @Composable
@@ -46,6 +49,14 @@ fun TareasScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
+    @Composable
+    fun EmptyTareasMessage(){
+        Box(modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center){
+            Text("No hay tareas registradas.")
+        }
+    }
+
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
             snackbarHostState.showSnackbar(it)
@@ -60,7 +71,7 @@ fun TareasScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .padding(top = 20.dp),
+                .padding(top = 20.dp).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AppTitle()
@@ -110,20 +121,21 @@ fun TareasScreen(
                         fechaEntrega = fechaEntrega,
                         materia = materiaSeleccionada
                     )
-                    tareasViewModel.agregarTarea(tarea)
-                    titulo = ""
-                    descripcion = ""
-                    fechaEntrega = ""
-                    materiaSeleccionada = ""
+                    val error = tareasViewModel.agregarTarea(tarea)
+                    if (error != null) {
+                        snackbarMessage = error
+                    } else {
+                        snackbarMessage = "Tarea agregada exitosamente."
+                        titulo = ""
+                        descripcion = ""
+                        fechaEntrega = ""
+                        materiaSeleccionada = ""
+                    }
                 },
                 enabled = titulo.isNotBlank() && materiaSeleccionada.isNotBlank()
             ) {
                 Text("Guardar Tarea")
             }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            Text("Tareas registradas:", style = MaterialTheme.typography.titleMedium)
 
             val materiasDisponibles = tareasViewModel.obtenerMateriasUnicas()
             val materiasFiltradas = tareasViewModel.materiasFiltradas
@@ -134,12 +146,11 @@ fun TareasScreen(
             if (materiasDisponibles.isEmpty()) {
                 Text("No hay filtros disponibles.")
             }
-            LazyRow(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    .fillMaxWidth().horizontalScroll(rememberScrollState()),
             ) {
-                items(materiasDisponibles) { materia ->
+                materiasDisponibles.forEach { materia ->
                     AssistChip(
                         onClick = { tareasViewModel.alternarFiltroMateria(materia) },
                         label = { Text(materia) },
@@ -161,11 +172,19 @@ fun TareasScreen(
                 Text(if (ordenarPorFechaAsc) "Quitar orden por fecha" else "Ordenar por fecha más próxima")
             }
 
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Text("Tareas registradas:", style = MaterialTheme.typography.titleMedium)
+
+            if (tareasFiltradas.isEmpty()) {
+                EmptyTareasMessage()
+            }
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(tareasFiltradas) { tarea ->
+                tareasFiltradas.forEach { tarea ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp)
