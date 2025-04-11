@@ -34,7 +34,7 @@ fun NotiTareasNavGraph(
             })
         }
         composable(Routes.Tareas) {
-            TareasScreen( materiasViewModel = materiasViewModel,
+            TareasScreen( navController = navController, materiasViewModel = materiasViewModel,
                 tareasViewModel = tareasViewModel)
         }
     }
