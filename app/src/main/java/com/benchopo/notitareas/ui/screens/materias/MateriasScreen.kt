@@ -92,17 +92,15 @@ fun MateriasScreen(
             }
 
             Text("Materias registradas:", style = MaterialTheme.typography.titleMedium)
-            LazyColumn(
+            Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
                 if (materias.isEmpty()) {
-                   item{
                        EmptyMateriasMessage()
-                   }
                 }else{
-                    items(materias) { materiaItem ->
+                    materias.forEach { materiaItem ->
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(30.dp)
