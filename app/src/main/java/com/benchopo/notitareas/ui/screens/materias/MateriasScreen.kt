@@ -22,6 +22,7 @@ import com.benchopo.notitareas.ui.components.SnackbarComponent
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import com.benchopo.notitareas.ui.components.AppTitle
 
 @Composable
 fun MateriasScreen(
@@ -38,28 +39,6 @@ fun MateriasScreen(
         snackbarMessage?.let {
             snackbarHostState.showSnackbar(it)
             snackbarMessage = null
-        }
-    }
-
-    // Este es el título de la app, siempre arriba en todas las vistas
-    @Composable
-    fun AppTitle() {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    Brush.linearGradient(
-                        listOf(Color(0xFF4710EE), Color(0xFF9031CB))
-                    ), shape = RoundedCornerShape(30.dp)
-                )
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "NotiTareas 😎✔",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.White,
-                fontWeight = FontWeight.Bold)
         }
     }
 
