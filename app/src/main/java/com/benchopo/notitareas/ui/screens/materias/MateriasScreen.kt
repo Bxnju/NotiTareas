@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,14 +17,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.benchopo.notitareas.ui.theme.NotiTareasTheme
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
+import com.benchopo.notitareas.viewModel.TareasViewModel
 
 @Composable
 fun MateriasScreen(
+    navController: NavController,
+    tareasViewModel: TareasViewModel = viewModel(),
     materiasViewModel: MateriasViewModel = viewModel(),
     onNavigateToTareas: () -> Unit
 ) {
@@ -102,7 +107,7 @@ fun MateriasScreen(
                 }
             }
 
-            Divider(color = Color.LightGray)
+            HorizontalDivider(thickness = 5.dp, color = Color.LightGray)
 
             Text("Materias registradas:", style = MaterialTheme.typography.titleMedium)
 
@@ -131,12 +136,16 @@ fun MateriasScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(
-                                    text = materiaItem.nombre,
-                                    color = Color.White,
-                                    fontWeight = FontWeight.SemiBold,
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
+
+                                TextButton(onClick = { navController.navigate("tareasPorMateria/${materiaItem.nombre}") }) {
+                                    Text(
+                                        text = materiaItem.nombre,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.SemiBold,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
+
                                 IconButton(
                                     onClick = {
                                         materiasViewModel.eliminarMateria(materiaItem.id)
