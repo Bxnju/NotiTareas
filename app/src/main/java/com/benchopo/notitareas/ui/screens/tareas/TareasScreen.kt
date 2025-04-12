@@ -26,6 +26,7 @@ import com.benchopo.notitareas.data.model.Tarea
 import com.benchopo.notitareas.ui.components.AppTitle
 import com.benchopo.notitareas.ui.components.DropdownMenuBox
 import com.benchopo.notitareas.ui.components.Snackbar
+import com.benchopo.notitareas.viewModel.AuthViewModel
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
 import java.util.*
@@ -34,7 +35,8 @@ import java.util.*
 fun TareasScreen(
     navController: NavController,
     tareasViewModel: TareasViewModel = viewModel(),
-    materiasViewModel: MateriasViewModel = viewModel()
+    materiasViewModel: MateriasViewModel = viewModel(),
+    authViewModel: AuthViewModel
 ) {
     var titulo by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
@@ -127,11 +129,13 @@ fun TareasScreen(
 
             Button(
                 onClick = {
+                    val materia = materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
                     val tarea = Tarea(
                         titulo = titulo,
                         descripcion = descripcion,
                         fechaEntrega = fechaEntrega,
-                        materia = materiaSeleccionada
+                        materia = materiaSeleccionada,
+                        idMateria = materia?.id!!
                     )
                     val error = tareasViewModel.agregarTarea(tarea)
                     if (error != null) {
