@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.benchopo.notitareas.ui.theme.NotiTareasTheme
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
@@ -28,7 +27,6 @@ import com.benchopo.notitareas.viewModel.TareasViewModel
 @Composable
 fun MateriasScreen(
     navController: NavController,
-    tareasViewModel: TareasViewModel = viewModel(),
     materiasViewModel: MateriasViewModel = viewModel(),
     onNavigateToTareas: () -> Unit
 ) {
