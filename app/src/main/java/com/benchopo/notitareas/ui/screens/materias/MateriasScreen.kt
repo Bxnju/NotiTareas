@@ -118,7 +118,10 @@ fun MateriasScreen(
                                 .fillMaxWidth()
                                 .shadow(4.dp, RoundedCornerShape(20.dp)),
                             shape = RoundedCornerShape(20.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            onClick = {
+                                navController.navigate("tareasPorMateria/${materiaItem.nombre}")
+                            }
                         ) {
                             Row(
                                 modifier = Modifier
@@ -134,14 +137,12 @@ fun MateriasScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
 
-                                TextButton(onClick = { navController.navigate("tareasPorMateria/${materiaItem.nombre}") }) {
                                     Text(
                                         text = materiaItem.nombre,
                                         color = Color.White,
                                         fontWeight = FontWeight.SemiBold,
                                         style = MaterialTheme.typography.bodyLarge
                                     )
-                                }
 
                                 IconButton(
                                     onClick = {
