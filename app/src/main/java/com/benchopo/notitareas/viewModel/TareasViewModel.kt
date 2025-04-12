@@ -38,6 +38,13 @@ class TareasViewModel : ViewModel() {
         }
     }
 
+    fun marcarComoIncompleta(tarea: Tarea) {
+        val index = _tareas.indexOf(tarea)
+        if (index != -1) {
+            _tareas[index] = _tareas[index].copy(completada = false)
+        }
+    }
+
     fun alternarFiltroMateria(materia: String) {
         if (_materiasFiltradas.contains(materia)) {
             _materiasFiltradas.remove(materia)
