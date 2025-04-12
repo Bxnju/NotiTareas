@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
@@ -70,38 +71,46 @@ fun MateriasScreen(
         ) {
             AppTitle()
 
-            Text(
+            if (usuarioActual!!.rol == Rol.PROFESOR) Text(
                 "Registrar Materias",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold
+            ) else Text(
+                "Mis Materias",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold
             )
 
-            OutlinedTextField(
-                value = materia,
-                onValueChange = { materia = it },
-                label = { Text("Nombre de la materia") },
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
+            if (usuarioActual.rol == Rol.PROFESOR) {
+                OutlinedTextField(
+                    value = materia,
+                    onValueChange = { materia = it },
+                    label = { Text("Nombre de la materia") },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(
-                    onClick = {
-                        val error = materiasViewModel.agregarMateria(materia, usuarioActual!!.id)
-                        if (error != null) {
-                            snackbarMessage = error
-                        } else {
-                            snackbarMessage = "Materia agregada exitosamente."
-                            materia = ""
-                        }
-                    },
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text("Agregar")
+                if (usuarioActual.rol == Rol.PROFESOR) {
+                    Button(
+                        onClick = {
+                            val error = materiasViewModel.agregarMateria(materia, usuarioActual.id)
+                            if (error != null) {
+                                snackbarMessage = error
+                            } else {
+                                snackbarMessage = "Materia agregada exitosamente."
+                                materia = ""
+                            }
+                        },
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Agregar")
+                    }
                 }
 
                 TextButton(onClick = onNavigateToTareas) {
