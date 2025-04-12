@@ -33,15 +33,13 @@ fun TareasPorMateriaScreen(
     nombreMateria: String,
     tareasViewModel: TareasViewModel = viewModel()
 ) {
-    val tareasFiltradas = remember(tareasViewModel.tareas, tareasViewModel.ordenarPorFechaAscendente.value) {
-        tareasViewModel.tareas
-            .filter { it.materia == nombreMateria }
-            .let {
-                if (tareasViewModel.ordenarPorFechaAscendente.value) {
-                    it.sortedBy { tarea -> tarea.fechaEntrega }
-                } else it
-            }
-    }
+    val tareasFiltradas = tareasViewModel.tareas
+        .filter { it.materia == nombreMateria }
+        .let {
+            if (tareasViewModel.ordenarPorFechaAscendente.value) {
+                it.sortedBy { tarea -> tarea.fechaEntrega }
+            } else it
+        }
 
     val snackbarHostState = rememberSnackbarHostState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
