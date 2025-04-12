@@ -10,6 +10,7 @@ import com.benchopo.notitareas.ui.theme.NotiTareasTheme
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.benchopo.notitareas.viewModel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +21,13 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     val materiasViewModel: MateriasViewModel = viewModel()
                     val tareasViewModel: TareasViewModel = viewModel()
-                    NotiTareasNavGraph(navController = navController, materiasViewModel = materiasViewModel,
-                        tareasViewModel = tareasViewModel)
+                    val authViewModel: AuthViewModel = viewModel()
+                    NotiTareasNavGraph(
+                        navController = navController,
+                        materiasViewModel = materiasViewModel,
+                        tareasViewModel = tareasViewModel,
+                        authViewModel = authViewModel
+                    )
                 }
             }
         }
