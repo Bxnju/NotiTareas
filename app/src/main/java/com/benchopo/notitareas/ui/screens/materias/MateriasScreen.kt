@@ -22,7 +22,6 @@ import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
-import com.benchopo.notitareas.viewModel.TareasViewModel
 
 @Composable
 fun MateriasScreen(
