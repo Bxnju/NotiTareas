@@ -94,7 +94,7 @@ fun MateriasScreen(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = if (usuarioActual.rol == Rol.PROFESOR) Arrangement.SpaceBetween else Arrangement.End
             ) {
                 if (usuarioActual.rol == Rol.PROFESOR) {
                     Button(
