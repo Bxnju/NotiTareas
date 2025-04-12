@@ -8,6 +8,7 @@ data class Tarea(
     val descripcion: String,
     val fechaEntrega: String,
     val materia: String,
+    val idMateria: String,
     var completada: Boolean = false
 )
 
