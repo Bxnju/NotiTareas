@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -237,12 +238,14 @@ fun TareasScreen(
 
                                     IconButton(
                                         onClick = {
-                                            tareasViewModel.marcarComoCompletada(tarea)
-                                            snackbarMessage = "Tarea marcada como completada 🎉"
+                                            if (!tarea.completada) snackbarMessage = "Tarea marcada como completada 🎉"
+                                            if (!tarea.completada) tareasViewModel.marcarComoCompletada(tarea)
+                                            else tareasViewModel.marcarComoIncompleta(tarea)
                                         },
-                                        enabled = !tarea.completada
                                     ) {
-                                        Icon(Icons.Default.Check, contentDescription = "Completar", tint = Color.White)
+                                        Icon(if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
+                                            contentDescription = "Completar",
+                                            tint = Color.White)
                                     }
                                 }
                             }
