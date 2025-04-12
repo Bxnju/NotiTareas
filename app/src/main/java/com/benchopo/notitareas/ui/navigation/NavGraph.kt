@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.benchopo.notitareas.ui.screens.materias.MateriasScreen
+import com.benchopo.notitareas.ui.screens.tareas.TareasPorMateriaScreen
 import com.benchopo.notitareas.ui.screens.tareas.TareasScreen
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
@@ -28,7 +29,7 @@ fun NotiTareasNavGraph(
         modifier = modifier
     ) {
         composable(Routes.Materias) {
-            MateriasScreen( materiasViewModel = materiasViewModel,
+            MateriasScreen( navController = navController ,materiasViewModel = materiasViewModel,
                 onNavigateToTareas = {
                 navController.navigate(Routes.Tareas)
             })
@@ -37,5 +38,15 @@ fun NotiTareasNavGraph(
             TareasScreen( navController = navController, materiasViewModel = materiasViewModel,
                 tareasViewModel = tareasViewModel)
         }
+
+        composable("tareasPorMateria/{materiaNombre}") { backStackEntry ->
+            val materiaNombre = backStackEntry.arguments?.getString("materiaNombre") ?: ""
+            TareasPorMateriaScreen(
+                navController = navController,
+                tareasViewModel = tareasViewModel,
+                nombreMateria = materiaNombre
+            )
+        }
+
     }
 }
