@@ -22,15 +22,20 @@ import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
+import com.benchopo.notitareas.viewModel.AuthViewModel
 
 @Composable
 fun MateriasScreen(
     navController: NavController,
+    authViewModel: AuthViewModel,
     materiasViewModel: MateriasViewModel = viewModel(),
     onNavigateToTareas: () -> Unit
 ) {
     var materia by remember { mutableStateOf("") }
     val materias = materiasViewModel.materias
+
+    val usuarioActual = authViewModel.usuarioActual
+
     val snackbarHostState = rememberSnackbarHostState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
@@ -86,7 +91,7 @@ fun MateriasScreen(
             ) {
                 Button(
                     onClick = {
-                        val error = materiasViewModel.agregarMateria(materia)
+                        val error = materiasViewModel.agregarMateria(materia, usuarioActual!!.id)
                         if (error != null) {
                             snackbarMessage = error
                         } else {
