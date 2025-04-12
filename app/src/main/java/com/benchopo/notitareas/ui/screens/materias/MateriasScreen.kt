@@ -104,7 +104,7 @@ fun MateriasScreen(
                 }
             }
 
-            HorizontalDivider(thickness = 5.dp, color = Color.LightGray)
+            HorizontalDivider(thickness = 3.dp, color = Color.LightGray)
 
             Text("Materias registradas:", style = MaterialTheme.typography.titleMedium)
 
