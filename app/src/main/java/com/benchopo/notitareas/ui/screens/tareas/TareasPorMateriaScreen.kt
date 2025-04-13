@@ -24,11 +24,13 @@ import com.benchopo.notitareas.viewModel.TareasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
+import com.benchopo.notitareas.viewModel.AuthViewModel
 
 @Composable
 fun TareasPorMateriaScreen(
     navController: NavController,
     nombreMateria: String,
+    authViewModel: AuthViewModel,
     tareasViewModel: TareasViewModel = viewModel()
 ) {
     val tareasFiltradas = tareasViewModel.tareas
@@ -38,6 +40,8 @@ fun TareasPorMateriaScreen(
                 it.sortedBy { tarea -> tarea.fechaEntrega }
             } else it
         }
+
+    val usuarioActual = authViewModel.usuarioActual
 
     val snackbarHostState = rememberSnackbarHostState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
@@ -60,7 +64,7 @@ fun TareasPorMateriaScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AppTitle()
+            AppTitle(usuarioActual!!.nombre)
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { navController.popBackStack() }) {
