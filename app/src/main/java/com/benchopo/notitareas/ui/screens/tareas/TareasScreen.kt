@@ -49,6 +49,8 @@ fun TareasScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
+    val usuarioActual = authViewModel.usuarioActual
+
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
             snackbarHostState.showSnackbar(it)
@@ -78,7 +80,7 @@ fun TareasScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AppTitle()
+            AppTitle(usuarioActual!!.nombre)
 
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
