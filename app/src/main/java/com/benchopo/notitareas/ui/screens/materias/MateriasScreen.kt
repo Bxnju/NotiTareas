@@ -71,7 +71,7 @@ fun MateriasScreen(
         ) {
             AppTitle(usuarioActual!!.nombre)
 
-            if (usuarioActual!!.rol == Rol.PROFESOR) Text(
+            if (usuarioActual.rol == Rol.PROFESOR) Text(
                 "Registrar Materias",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold
