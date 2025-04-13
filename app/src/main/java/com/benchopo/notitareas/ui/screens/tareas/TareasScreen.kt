@@ -133,7 +133,8 @@ fun TareasScreen(
 
                 Button(
                     onClick = {
-                        val materia = materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
+                        val materia =
+                            materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
                         val tarea = Tarea(
                             titulo = titulo,
                             descripcion = descripcion,
@@ -186,7 +187,9 @@ fun TareasScreen(
                             onClick = { tareasViewModel.alternarFiltroMateria(materia) },
                             label = { Text(materia) },
                             colors = AssistChipDefaults.assistChipColors(
-                                containerColor = if (materiasFiltradas.contains(materia)) Color(0xFF5629D9)
+                                containerColor = if (materiasFiltradas.contains(materia)) Color(
+                                    0xFF5629D9
+                                )
                                 else Color(0xFFAAAAAA),
                                 labelColor = Color.White
                             )
@@ -234,32 +237,52 @@ fun TareasScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(tarea.titulo, color = Color.White, fontWeight = FontWeight.Bold)
+                                    Text(
+                                        tarea.titulo,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                     Text("Materia: ${tarea.materia}", color = Color.White)
                                     Text("Entrega: ${tarea.fechaEntrega}", color = Color.White)
                                     if (tarea.descripcion.isNotBlank()) {
-                                        Text("Descripción: ${tarea.descripcion}", color = Color.White)
+                                        Text(
+                                            "Descripción: ${tarea.descripcion}",
+                                            color = Color.White
+                                        )
                                     }
                                 }
 
                                 Column(horizontalAlignment = Alignment.End) {
-                                    IconButton(onClick = {
-                                        tareasViewModel.eliminarTarea(tarea)
-                                        snackbarMessage = "Tarea eliminada correctamente"
-                                    }) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Eliminar", tint = Color.White)
+                                    if (usuarioActual.rol == Rol.PROFESOR) {
+                                        IconButton(onClick = {
+                                            tareasViewModel.eliminarTarea(tarea)
+                                            snackbarMessage = "Tarea eliminada correctamente"
+                                        }) {
+                                            Icon(
+                                                Icons.Default.Delete,
+                                                contentDescription = "Eliminar",
+                                                tint = Color.White
+                                            )
+                                        }
                                     }
 
-                                    IconButton(
-                                        onClick = {
-                                            if (!tarea.completada) snackbarMessage = "Tarea marcada como completada 🎉"
-                                            if (!tarea.completada) tareasViewModel.marcarComoCompletada(tarea)
-                                            else tareasViewModel.marcarComoIncompleta(tarea)
-                                        },
-                                    ) {
-                                        Icon(if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
-                                            contentDescription = "Completar",
-                                            tint = Color.White)
+                                    if (usuarioActual.rol == Rol.ESTUDIANTE) {
+                                        IconButton(
+                                            onClick = {
+                                                if (!tarea.completada) snackbarMessage =
+                                                    "Tarea marcada como completada 🎉"
+                                                if (!tarea.completada) tareasViewModel.marcarComoCompletada(
+                                                    tarea
+                                                )
+                                                else tareasViewModel.marcarComoIncompleta(tarea)
+                                            },
+                                        ) {
+                                            Icon(
+                                                if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
+                                                contentDescription = "Completar",
+                                                tint = Color.White
+                                            )
+                                        }
                                     }
                                 }
                             }
