@@ -197,7 +197,8 @@ fun TareasScreen(
 
             Button(
                 onClick = { tareasViewModel.toggleOrdenPorFecha() },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !materiasFiltradas.isEmpty()
             ) {
                 Text(if (ordenarPorFechaAsc) "Quitar orden por fecha" else "Ordenar por fecha más próxima")
             }
