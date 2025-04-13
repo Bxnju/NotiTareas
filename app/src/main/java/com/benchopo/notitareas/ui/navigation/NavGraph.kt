@@ -60,6 +60,7 @@ fun NotiTareasNavGraph(
             val materiaNombre = backStackEntry.arguments?.getString("materiaNombre") ?: ""
             TareasPorMateriaScreen(
                 navController = navController,
+                authViewModel = authViewModel,
                 tareasViewModel = tareasViewModel,
                 nombreMateria = materiaNombre
             )
