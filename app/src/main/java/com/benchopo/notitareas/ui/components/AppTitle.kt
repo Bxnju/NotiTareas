@@ -26,7 +26,8 @@ fun AppTitle(usuarioNombre: String) {
                 ), shape = RoundedCornerShape(30.dp)
             )
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
+        verticalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
         Text(
             text = "NotiTareas ✔",
