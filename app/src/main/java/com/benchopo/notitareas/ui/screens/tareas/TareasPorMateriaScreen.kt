@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.viewModel.TareasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
@@ -114,32 +115,52 @@ fun TareasPorMateriaScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(tarea.titulo, color = Color.White, fontWeight = FontWeight.Bold)
+                                    Text(
+                                        tarea.titulo,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
                                     Text("Materia: ${tarea.materia}", color = Color.White)
                                     Text("Entrega: ${tarea.fechaEntrega}", color = Color.White)
                                     if (tarea.descripcion.isNotBlank()) {
-                                        Text("Descripción: ${tarea.descripcion}", color = Color.White)
+                                        Text(
+                                            "Descripción: ${tarea.descripcion}",
+                                            color = Color.White
+                                        )
                                     }
                                 }
 
                                 Column(horizontalAlignment = Alignment.End) {
-                                    IconButton(onClick = {
-                                        tareasViewModel.eliminarTarea(tarea)
-                                        snackbarMessage = "Tarea eliminada correctamente"
-                                    }) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Eliminar", tint = Color.White)
+                                    if (usuarioActual.rol == Rol.PROFESOR) {
+                                        IconButton(onClick = {
+                                            tareasViewModel.eliminarTarea(tarea)
+                                            snackbarMessage = "Tarea eliminada correctamente"
+                                        }) {
+                                            Icon(
+                                                Icons.Default.Delete,
+                                                contentDescription = "Eliminar",
+                                                tint = Color.White
+                                            )
+                                        }
                                     }
 
-                                    IconButton(
-                                        onClick = {
-                                            if (!tarea.completada) snackbarMessage = "Tarea marcada como completada 🎉"
-                                            if (!tarea.completada) tareasViewModel.marcarComoCompletada(tarea)
-                                            else tareasViewModel.marcarComoIncompleta(tarea)
-                                        },
-                                    ) {
-                                        Icon(if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
-                                            contentDescription = "Completar",
-                                            tint = Color.White)
+                                    if (usuarioActual.rol == Rol.ESTUDIANTE) {
+                                        IconButton(
+                                            onClick = {
+                                                if (!tarea.completada) snackbarMessage =
+                                                    "Tarea marcada como completada 🎉"
+                                                if (!tarea.completada) tareasViewModel.marcarComoCompletada(
+                                                    tarea
+                                                )
+                                                else tareasViewModel.marcarComoIncompleta(tarea)
+                                            },
+                                        ) {
+                                            Icon(
+                                                if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
+                                                contentDescription = "Completar",
+                                                tint = Color.White
+                                            )
+                                        }
                                     }
                                 }
                             }
