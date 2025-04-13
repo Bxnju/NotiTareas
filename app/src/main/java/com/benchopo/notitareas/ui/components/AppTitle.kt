@@ -2,7 +2,7 @@ package com.benchopo.notitareas.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AppTitle() {
-    Row(
+fun AppTitle(usuarioNombre: String) {
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
@@ -26,11 +26,17 @@ fun AppTitle() {
                 ), shape = RoundedCornerShape(30.dp)
             )
             .padding(16.dp),
-        horizontalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Text(
-            text = "NotiTareas 😎✔",
+            text = "NotiTareas ✔",
             style = MaterialTheme.typography.headlineMedium,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "Bienvenido $usuarioNombre",
+            style = MaterialTheme.typography.bodySmall,
             color = Color.White,
             fontWeight = FontWeight.Bold
         )
