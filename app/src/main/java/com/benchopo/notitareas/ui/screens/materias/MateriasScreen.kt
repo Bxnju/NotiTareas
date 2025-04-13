@@ -69,7 +69,7 @@ fun MateriasScreen(
                 .padding(top = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AppTitle()
+            AppTitle(usuarioActual!!.nombre)
 
             if (usuarioActual!!.rol == Rol.PROFESOR) Text(
                 "Registrar Materias",
