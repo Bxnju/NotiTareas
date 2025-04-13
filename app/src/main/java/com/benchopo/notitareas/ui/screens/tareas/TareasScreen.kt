@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.benchopo.notitareas.data.model.Tarea
 import com.benchopo.notitareas.ui.components.AppTitle
+import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.ui.components.DropdownMenuBox
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.viewModel.AuthViewModel
@@ -89,78 +90,80 @@ fun TareasScreen(
                 )
             }
 
-            Text("Registrar Tarea", style = MaterialTheme.typography.headlineSmall)
+            if (usuarioActual.rol == Rol.PROFESOR) {
+                Text("Registrar Tarea", style = MaterialTheme.typography.headlineSmall)
 
-            OutlinedTextField(
-                value = titulo,
-                onValueChange = { titulo = it },
-                label = { Text("Título") },
-                modifier = Modifier.fillMaxWidth()
-            )
+                OutlinedTextField(
+                    value = titulo,
+                    onValueChange = { titulo = it },
+                    label = { Text("Título") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-            OutlinedTextField(
-                value = descripcion,
-                onValueChange = { descripcion = it },
-                label = { Text("Descripción") },
-                modifier = Modifier.fillMaxWidth()
-            )
+                OutlinedTextField(
+                    value = descripcion,
+                    onValueChange = { descripcion = it },
+                    label = { Text("Descripción") },
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-            Button(
-                onClick = {
-                    val datePicker = DatePickerDialog(
-                        context,
-                        { _: DatePicker, year: Int, month: Int, day: Int ->
-                            fechaEntrega = "$day/${month + 1}/$year"
-                        },
-                        calendario.get(Calendar.YEAR),
-                        calendario.get(Calendar.MONTH),
-                        calendario.get(Calendar.DAY_OF_MONTH)
-                    )
-                    datePicker.show()
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(if (fechaEntrega.isEmpty()) "Seleccionar fecha" else "Fecha: $fechaEntrega")
+                Button(
+                    onClick = {
+                        val datePicker = DatePickerDialog(
+                            context,
+                            { _: DatePicker, year: Int, month: Int, day: Int ->
+                                fechaEntrega = "$day/${month + 1}/$year"
+                            },
+                            calendario.get(Calendar.YEAR),
+                            calendario.get(Calendar.MONTH),
+                            calendario.get(Calendar.DAY_OF_MONTH)
+                        )
+                        datePicker.show()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(if (fechaEntrega.isEmpty()) "Seleccionar fecha" else "Fecha: $fechaEntrega")
+                }
+
+                DropdownMenuBox(
+                    items = materiasNombres,
+                    selectedItem = materiaSeleccionada,
+                    onItemSelected = { materiaSeleccionada = it }
+                )
+
+                Button(
+                    onClick = {
+                        val materia = materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
+                        val tarea = Tarea(
+                            titulo = titulo,
+                            descripcion = descripcion,
+                            fechaEntrega = fechaEntrega,
+                            materia = materiaSeleccionada,
+                            idMateria = materia?.id!!
+                        )
+                        val error = tareasViewModel.agregarTarea(tarea)
+                        if (error != null) {
+                            snackbarMessage = error
+                        } else {
+                            snackbarMessage = "Tarea agregada exitosamente."
+                            titulo = ""
+                            descripcion = ""
+                            fechaEntrega = ""
+                            materiaSeleccionada = ""
+                        }
+                    },
+                    enabled = titulo.isNotBlank() && materiaSeleccionada.isNotBlank(),
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text("Guardar Tarea")
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    thickness = 3.dp,
+                    color = Color.LightGray
+                )
             }
-
-            DropdownMenuBox(
-                items = materiasNombres,
-                selectedItem = materiaSeleccionada,
-                onItemSelected = { materiaSeleccionada = it }
-            )
-
-            Button(
-                onClick = {
-                    val materia = materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
-                    val tarea = Tarea(
-                        titulo = titulo,
-                        descripcion = descripcion,
-                        fechaEntrega = fechaEntrega,
-                        materia = materiaSeleccionada,
-                        idMateria = materia?.id!!
-                    )
-                    val error = tareasViewModel.agregarTarea(tarea)
-                    if (error != null) {
-                        snackbarMessage = error
-                    } else {
-                        snackbarMessage = "Tarea agregada exitosamente."
-                        titulo = ""
-                        descripcion = ""
-                        fechaEntrega = ""
-                        materiaSeleccionada = ""
-                    }
-                },
-                enabled = titulo.isNotBlank() && materiaSeleccionada.isNotBlank(),
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text("Guardar Tarea")
-            }
-
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 8.dp),
-                thickness = 3.dp,
-                color = Color.LightGray
-            )
 
             Text("Filtrar por materia:", style = MaterialTheme.typography.titleMedium)
 
