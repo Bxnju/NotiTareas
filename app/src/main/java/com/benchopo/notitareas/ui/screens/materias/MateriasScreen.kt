@@ -134,7 +134,7 @@ fun MateriasScreen(
                             shape = RoundedCornerShape(20.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                             onClick = {
-                                navController.navigate("tareasPorMateria/${materiaItem.nombre}")
+                                navController.navigate("tareasPorMateria/${materiaItem.titulo}")
                             }
                         ) {
                             Row(
@@ -152,7 +152,7 @@ fun MateriasScreen(
                             ) {
 
                                     Text(
-                                        text = materiaItem.nombre,
+                                        text = materiaItem.titulo,
                                         color = Color.White,
                                         fontWeight = FontWeight.SemiBold,
                                         style = MaterialTheme.typography.bodyLarge
