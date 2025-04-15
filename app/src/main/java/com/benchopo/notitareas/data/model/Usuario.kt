@@ -6,7 +6,7 @@ data class Usuario(
     val id: String = UUID.randomUUID().toString(),
     val nombre: String,
     val rol: Rol,
-    val materiasInscritas: MutableList<String> = mutableListOf()
+    val idMateriasInscritas: MutableList<String> = mutableListOf()
 )
 
 enum class Rol {
