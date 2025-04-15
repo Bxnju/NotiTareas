@@ -9,6 +9,6 @@ data class Tarea(
     val fechaEntrega: String,
     val materia: String,
     val idMateria: String,
-    var completada: Boolean = false
+    val completadaPor: MutableList<String> = mutableListOf(),
 )
 
