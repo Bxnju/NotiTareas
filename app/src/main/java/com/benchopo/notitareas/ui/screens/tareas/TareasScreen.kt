@@ -44,7 +44,7 @@ fun TareasScreen(
     var fechaEntrega by remember { mutableStateOf("") }
     var materiaSeleccionada by remember { mutableStateOf("") }
 
-    val materiasNombres = materiasViewModel.materias.map { it.nombre }
+    val materiasNombres = materiasViewModel.materias.map { it.titulo }
     val context = LocalContext.current
     val calendario = Calendar.getInstance()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -134,7 +134,7 @@ fun TareasScreen(
                 Button(
                     onClick = {
                         val materia =
-                            materiasViewModel.materias.find { it.nombre == materiaSeleccionada }
+                            materiasViewModel.materias.find { it.titulo == materiaSeleccionada }
                         val tarea = Tarea(
                             titulo = titulo,
                             descripcion = descripcion,
@@ -215,6 +215,14 @@ fun TareasScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     tareasFiltradas.forEach { tarea ->
+
+                        var completadaPorEstudiante = false
+                        tarea.completadaPor.forEach {
+                            if (it == usuarioActual.id) {
+                                completadaPorEstudiante = true
+                            }
+                        }
+
                         Card(
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier.fillMaxWidth()
@@ -222,7 +230,7 @@ fun TareasScreen(
                             Row(
                                 modifier = Modifier
                                     .background(
-                                        brush = if (tarea.completada)
+                                        brush = if (completadaPorEstudiante)
                                             Brush.linearGradient(
                                                 listOf(Color(0xFF0063B6), Color(0xFF04754C))
                                             )
@@ -269,16 +277,18 @@ fun TareasScreen(
                                     if (usuarioActual.rol == Rol.ESTUDIANTE) {
                                         IconButton(
                                             onClick = {
-                                                if (!tarea.completada) snackbarMessage =
-                                                    "Tarea marcada como completada 🎉"
-                                                if (!tarea.completada) tareasViewModel.marcarComoCompletada(
-                                                    tarea
-                                                )
-                                                else tareasViewModel.marcarComoIncompleta(tarea)
+                                                if (!completadaPorEstudiante) {
+                                                    snackbarMessage =
+                                                        "Tarea marcada como completada 🎉"
+
+                                                    tareasViewModel.marcarComoCompletada(
+                                                        tarea, usuarioActual.id
+                                                    )
+                                                } else tareasViewModel.marcarComoIncompleta(tarea, usuarioActual.id)
                                             },
                                         ) {
                                             Icon(
-                                                if (tarea.completada) Icons.Default.Clear else Icons.Default.Check,
+                                                if (completadaPorEstudiante) Icons.Default.Clear else Icons.Default.Check,
                                                 contentDescription = "Completar",
                                                 tint = Color.White
                                             )
