@@ -8,14 +8,14 @@ class MateriasViewModel : ViewModel() {
     private val _materias = mutableStateListOf<Materia>()
     val materias: List<Materia> get() = _materias
 
-    fun agregarMateria(nombre: String, idProfesor: String): String? {
-        if (nombre.length > 35) return "El nombre no puede tener más de 35 caracteres."
-        if (_materias.any { it.nombre.equals(nombre, ignoreCase = true) }) {
-            return "Ya existe una materia con ese nombre."
+    fun agregarMateria(titulo: String, idProfesor: String): String? {
+        if (titulo.length > 35) return "El titulo no puede tener más de 35 caracteres."
+        if (_materias.any { it.titulo.equals(titulo, ignoreCase = true) }) {
+            return "Ya existe una materia con ese titulo."
         }
-        if (nombre.isBlank()) return "El nombre no puede estar vacío."
+        if (titulo.isBlank()) return "El titulo no puede estar vacío."
 
-        _materias.add(Materia(nombre = nombre, idProfesor = idProfesor))
+        _materias.add(Materia(titulo = titulo, idProfesor = idProfesor))
         return null
     }
 
