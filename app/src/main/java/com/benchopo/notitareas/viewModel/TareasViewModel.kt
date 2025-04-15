@@ -31,17 +31,19 @@ class TareasViewModel : ViewModel() {
         _tareas.remove(tarea)
     }
 
-    fun marcarComoCompletada(tarea: Tarea) {
+    fun marcarComoCompletada(tarea: Tarea, idUsuario: String) {
         val index = _tareas.indexOf(tarea)
         if (index != -1) {
-            _tareas[index] = _tareas[index].copy(completada = true)
+            tarea.completadaPor.add(idUsuario)
+            _tareas[index] = tarea.copy()
         }
     }
 
-    fun marcarComoIncompleta(tarea: Tarea) {
+    fun marcarComoIncompleta(tarea: Tarea,  idUsuario: String) {
         val index = _tareas.indexOf(tarea)
         if (index != -1) {
-            _tareas[index] = _tareas[index].copy(completada = false)
+            tarea.completadaPor.remove(idUsuario)
+            _tareas[index] = tarea.copy()
         }
     }
 
