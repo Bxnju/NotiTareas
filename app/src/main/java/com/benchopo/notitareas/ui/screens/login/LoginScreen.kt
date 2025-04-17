@@ -21,7 +21,6 @@ import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.viewModel.AuthViewModel
 import com.benchopo.notitareas.ui.navigation.Routes
 import com.benchopo.notitareas.viewModel.UsuariosViewModel
-import com.benchopo.notitareas.ui.components.AppTitle
 
 @Composable
 fun LoginScreen(
