@@ -1,6 +1,7 @@
 package com.benchopo.notitareas.ui.screens.materias
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -8,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
@@ -27,6 +29,7 @@ import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
 import com.benchopo.notitareas.viewModel.AuthViewModel
+import com.benchopo.notitareas.viewModel.UsuariosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +37,7 @@ fun MateriasScreen(
     navController: NavController,
     authViewModel: AuthViewModel,
     materiasViewModel: MateriasViewModel = viewModel(),
+    usuariosViewModel: UsuariosViewModel = viewModel(),
     onNavigateToTareas: () -> Unit
 ) {
     var materia by remember { mutableStateOf("") }
@@ -124,17 +128,88 @@ fun MateriasScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
+                
+                var textSearch by remember { mutableStateOf("") }
+                OutlinedTextField(
+                    value = textSearch,
+                    onValueChange = { textSearch = it },
+                    label = { Text("Buscar estudiante") },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    trailingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = "Buscar")
+                    }
+                )
 
-                //TODO: Agregar lista de estudiantes a la materia
+                var estudiantesParaInscribir by remember { mutableStateOf(mutableListOf<String>()) }
+                var resultadoEstudiantes = usuariosViewModel.buscarEstudiantesPorNombre(textSearch)
+
+                if (resultadoEstudiantes.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+
+                        ) {
+                        resultadoEstudiantes.forEach { estudiante ->
+
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        Brush.horizontalGradient(
+                                            listOf(
+                                                Color(0xFF845EC2),
+                                                Color(0xFFD65DB1)
+                                            )
+                                        ),
+                                        shape = RoundedCornerShape(20.dp)
+                                    )
+                                    .padding(vertical = 10.dp)
+                                    .padding(horizontal = 10.dp)
+                                    .clickable(onClick = {
+                                        estudiantesParaInscribir.add(estudiante.id)
+                                        snackbarMessage = "${estudiante.nombre} fue agregado."
+                                    }),
+                                shape = RoundedCornerShape(20.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            ) {
+                                Text(
+                                    estudiante.nombre,
+                                    modifier = Modifier.padding(10.dp),
+                                    color = Color.White
+                                )
+                            }
+
+                        }
+                    }
+                } else {
+                    Text("No se encontraron resultados.")
+                }
 
                 Button(
                     onClick = {
-                        val error = materiasViewModel.agregarMateria(materia, usuarioActual.id)
+                        val error = materiasViewModel.agregarMateria(
+                            materia,
+                            usuarioActual.id,
+                            estudiantesParaInscribir
+                        )
                         if (error != null) {
                             snackbarMessage = error
                         } else {
-                            snackbarMessage = "Materia agregada exitosamente."
+                            estudiantesParaInscribir.forEach {
+                                usuariosViewModel.inscribirMateria(
+                                    it,
+                                    materiasViewModel.materias.last().id
+                                )
+                            }
+                            snackbarMessage = "Materia agregada exitosamente. ${estudiantesParaInscribir.size}"
                             materia = ""
+                            textSearch = ""
+                            estudiantesParaInscribir = mutableListOf()
                         }
                     },
                     shape = RoundedCornerShape(12.dp)
