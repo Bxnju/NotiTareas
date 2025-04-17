@@ -2,6 +2,7 @@ package com.benchopo.notitareas.ui.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -19,6 +21,7 @@ import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.viewModel.AuthViewModel
 import com.benchopo.notitareas.ui.navigation.Routes
 import com.benchopo.notitareas.viewModel.UsuariosViewModel
+import com.benchopo.notitareas.ui.components.AppTitle
 
 @Composable
 fun LoginScreen(
@@ -59,7 +62,26 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("NotiTareas", style = MaterialTheme.typography.headlineMedium)
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Brush.linearGradient(
+                            listOf(Color(0xFF4710EE), Color(0xFF9031CB))
+                        ), shape = RoundedCornerShape(30.dp)
+                    )
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "NotiTareas ✔",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
