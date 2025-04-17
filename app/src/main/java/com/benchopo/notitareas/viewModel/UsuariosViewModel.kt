@@ -15,7 +15,11 @@ class UsuariosViewModel : ViewModel() {
             listOf(
                 Usuario(nombre = "Ana", rol = Rol.ESTUDIANTE),
                 Usuario(nombre = "Luis", rol = Rol.ESTUDIANTE),
-                Usuario(nombre = "Carlos", rol = Rol.PROFESOR)
+                Usuario(nombre = "Carlos", rol = Rol.PROFESOR),
+                Usuario(nombre = "Laura", rol = Rol.ESTUDIANTE),
+                Usuario(nombre = "Pedro", rol = Rol.PROFESOR),
+                Usuario(nombre = "María", rol = Rol.ESTUDIANTE),
+                Usuario(nombre = "Juan", rol = Rol.PROFESOR),
             )
         )
     }
@@ -30,11 +34,16 @@ class UsuariosViewModel : ViewModel() {
         }
     }
 
-    fun obtenerUsuarioPorId(id: String): Usuario? {
-        return _usuarios.find { it.id == id }
-    }
+//    fun obtenerUsuarioPorId(id: String): Usuario? {
+//        return _usuarios.find { it.id == id }
+//    }
 
     fun agregarUsuario(usuario: Usuario) {
         _usuarios.add(usuario)
+    }
+
+    fun inscribirMateria(idUsuario: String, idMateria: String) {
+        val usuario = _usuarios.find { it.id == idUsuario }
+        usuario?.idMateriasInscritas?.add(idMateria)
     }
 }
