@@ -28,6 +28,7 @@ import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.ui.components.AppTitle
 import com.benchopo.notitareas.viewModel.AuthViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MateriasScreen(
     navController: NavController,
@@ -117,9 +118,15 @@ fun MateriasScreen(
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
-            }
 
-            if (usuarioActual.rol == Rol.PROFESOR) {
+                Text(
+                    "Añade estudiantes a la materia",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                //TODO: Agregar lista de estudiantes a la materia
+
                 Button(
                     onClick = {
                         val error = materiasViewModel.agregarMateria(materia, usuarioActual.id)
