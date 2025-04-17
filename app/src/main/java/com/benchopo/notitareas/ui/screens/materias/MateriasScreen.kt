@@ -128,7 +128,7 @@ fun MateriasScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold
                 )
-                
+
                 var textSearch by remember { mutableStateOf("") }
                 OutlinedTextField(
                     value = textSearch,
@@ -206,7 +206,8 @@ fun MateriasScreen(
                                     materiasViewModel.materias.last().id
                                 )
                             }
-                            snackbarMessage = "Materia agregada exitosamente. ${estudiantesParaInscribir.size}"
+                            snackbarMessage =
+                                "Materia agregada exitosamente. ${estudiantesParaInscribir.size}"
                             materia = ""
                             textSearch = ""
                             estudiantesParaInscribir = mutableListOf()
