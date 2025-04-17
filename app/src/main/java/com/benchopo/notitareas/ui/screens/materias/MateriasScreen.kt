@@ -89,7 +89,8 @@ fun MateriasScreen(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 if (usuarioActual.rol == Rol.PROFESOR) Text(
                     "Registrar Materias",
