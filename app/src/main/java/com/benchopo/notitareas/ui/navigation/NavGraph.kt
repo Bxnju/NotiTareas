@@ -12,6 +12,7 @@ import com.benchopo.notitareas.ui.screens.tareas.TareasScreen
 import com.benchopo.notitareas.viewModel.AuthViewModel
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
+import com.benchopo.notitareas.viewModel.UsuariosViewModel
 
 object Routes {
     const val Login = "login"
@@ -25,6 +26,7 @@ fun NotiTareasNavGraph(
     materiasViewModel: MateriasViewModel,
     tareasViewModel: TareasViewModel,
     authViewModel: AuthViewModel,
+    usuariosViewModel: UsuariosViewModel,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -41,6 +43,7 @@ fun NotiTareasNavGraph(
                 navController = navController,
                 materiasViewModel = materiasViewModel,
                 authViewModel = authViewModel,
+                usuariosViewModel = usuariosViewModel,
                 onNavigateToTareas = {
                     navController.navigate(Routes.Tareas)
                 }
@@ -52,7 +55,8 @@ fun NotiTareasNavGraph(
                 navController = navController,
                 tareasViewModel = tareasViewModel,
                 materiasViewModel = materiasViewModel,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                usuariosViewModel = usuariosViewModel
             )
         }
 
