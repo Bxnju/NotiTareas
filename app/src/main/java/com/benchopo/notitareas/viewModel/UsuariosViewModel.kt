@@ -20,6 +20,10 @@ class UsuariosViewModel : ViewModel() {
         )
     }
 
+    fun buscarEstudiantes(): List<Usuario> {
+        return _usuarios.filter { it.rol == Rol.ESTUDIANTE }
+    }
+
     fun buscarEstudiantesPorNombre(nombre: String): List<Usuario> {
         return _usuarios.filter {
             it.rol == Rol.ESTUDIANTE && it.nombre.contains(nombre, ignoreCase = true)
