@@ -11,6 +11,7 @@ import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.benchopo.notitareas.viewModel.AuthViewModel
+import com.benchopo.notitareas.viewModel.UsuariosViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +23,13 @@ class MainActivity : ComponentActivity() {
                     val materiasViewModel: MateriasViewModel = viewModel()
                     val tareasViewModel: TareasViewModel = viewModel()
                     val authViewModel: AuthViewModel = viewModel()
+                    val usuariosViewModel: UsuariosViewModel = viewModel()
                     NotiTareasNavGraph(
                         navController = navController,
                         materiasViewModel = materiasViewModel,
                         tareasViewModel = tareasViewModel,
-                        authViewModel = authViewModel
+                        authViewModel = authViewModel,
+                        usuariosViewModel = usuariosViewModel
                     )
                 }
             }
