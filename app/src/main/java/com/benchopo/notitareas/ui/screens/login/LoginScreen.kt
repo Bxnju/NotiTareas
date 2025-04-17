@@ -72,7 +72,7 @@ fun LoginScreen(
                     )
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(5.dp),
-                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = "NotiTareas ✔",
