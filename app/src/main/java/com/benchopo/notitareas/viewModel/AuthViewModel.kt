@@ -13,7 +13,7 @@ class AuthViewModel : ViewModel() {
 
     fun login(nombre: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
         // Buscar si ya existe el usuario
-        val existente = usuariosViewModel.usuarios.find { it.nombre == nombre && it.rol == rol }
+        val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.rol == rol }
 
         if (existente == null) {
             return "No existe un usuario con ese nombre y rol."
