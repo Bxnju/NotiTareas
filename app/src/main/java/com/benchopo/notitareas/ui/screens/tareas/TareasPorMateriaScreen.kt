@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +55,17 @@ fun TareasPorMateriaScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.linearGradient(
+                    listOf(Color(0xFF180042), Color(0xFF340026)),
+                    start = Offset.Zero,
+                    end = Offset.Infinite
+                ),
+            )
+    ) {
         Snackbar(snackbarHostState)
 
         Column(
@@ -162,7 +173,10 @@ fun TareasPorMateriaScreen(
                                                     tareasViewModel.marcarComoCompletada(
                                                         tarea, usuarioActual.id
                                                     )
-                                                } else tareasViewModel.marcarComoIncompleta(tarea, usuarioActual.id)
+                                                } else tareasViewModel.marcarComoIncompleta(
+                                                    tarea,
+                                                    usuarioActual.id
+                                                )
                                             },
                                         ) {
                                             Icon(
