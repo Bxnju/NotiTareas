@@ -2,8 +2,10 @@ package com.benchopo.notitareas.ui.screens.materias
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
@@ -66,7 +68,8 @@ fun MateriasScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp)
-                .padding(top = 24.dp),
+                .padding(top = 24.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AppTitle(usuarioActual!!.nombre)
@@ -151,12 +154,12 @@ fun MateriasScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
 
-                                    Text(
-                                        text = materiaItem.titulo,
-                                        color = Color.White,
-                                        fontWeight = FontWeight.SemiBold,
-                                        style = MaterialTheme.typography.bodyLarge
-                                    )
+                                Text(
+                                    text = materiaItem.titulo,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.SemiBold,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
 
                                 IconButton(
                                     onClick = {
