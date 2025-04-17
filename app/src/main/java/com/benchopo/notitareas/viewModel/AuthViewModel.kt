@@ -26,7 +26,7 @@ class AuthViewModel : ViewModel() {
 
     fun register(nombre: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
         // Buscar si ya existe el usuario
-        val existente = usuariosViewModel.usuarios.find { it.nombre == nombre && it.rol == rol }
+        val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.rol == rol }
 
         if (existente != null) {
             return "Ya existe un usuario con ese nombre y rol."
