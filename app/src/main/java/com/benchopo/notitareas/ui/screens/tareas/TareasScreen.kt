@@ -31,6 +31,7 @@ import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.viewModel.AuthViewModel
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.viewModel.TareasViewModel
+import com.benchopo.notitareas.viewModel.UsuariosViewModel
 import java.util.*
 
 @Composable
@@ -38,7 +39,8 @@ fun TareasScreen(
     navController: NavController,
     tareasViewModel: TareasViewModel = viewModel(),
     materiasViewModel: MateriasViewModel = viewModel(),
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    usuariosViewModel: UsuariosViewModel
 ) {
     var titulo by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
