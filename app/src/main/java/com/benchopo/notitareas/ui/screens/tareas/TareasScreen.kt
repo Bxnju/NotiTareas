@@ -204,7 +204,7 @@ fun TareasScreen(
                                 containerColor = if (materiasFiltradas.contains(materia)) Color(
                                     0xFF5629D9
                                 )
-                                else Color(0xFFAAAAAA),
+                                else Color(0xFF252525),
                                 labelColor = Color.White
                             )
                         )
