@@ -4,25 +4,19 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.data.model.Usuario
+import java.util.UUID
 
 class UsuariosViewModel : ViewModel() {
-    private val _usuarios = mutableStateListOf<Usuario>()
+    private val _usuarios = mutableListOf(
+        Usuario(id = 1.toString(), nombre = "Ana", rol = Rol.ESTUDIANTE),
+        Usuario(id = 2.toString(), nombre = "Luis", rol = Rol.ESTUDIANTE),
+        Usuario(id = 3.toString(), nombre = "Carlos", rol = Rol.PROFESOR),
+        Usuario(id = 4.toString(), nombre = "Laura", rol = Rol.ESTUDIANTE),
+        Usuario(id = 5.toString(), nombre = "Pedro", rol = Rol.PROFESOR),
+        Usuario(id = 6.toString(), nombre = "María", rol = Rol.ESTUDIANTE),
+        Usuario(id = 7.toString(), nombre = "Juan", rol = Rol.PROFESOR),
+    )
     val usuarios: List<Usuario> get() = _usuarios
-
-    init {
-        // Lista estática para pruebas
-        _usuarios.addAll(
-            listOf(
-                Usuario(nombre = "Ana", rol = Rol.ESTUDIANTE),
-                Usuario(nombre = "Luis", rol = Rol.ESTUDIANTE),
-                Usuario(nombre = "Carlos", rol = Rol.PROFESOR),
-                Usuario(nombre = "Laura", rol = Rol.ESTUDIANTE),
-                Usuario(nombre = "Pedro", rol = Rol.PROFESOR),
-                Usuario(nombre = "María", rol = Rol.ESTUDIANTE),
-                Usuario(nombre = "Juan", rol = Rol.PROFESOR),
-            )
-        )
-    }
 
     fun buscarEstudiantes(): List<Usuario> {
         return _usuarios.filter { it.rol == Rol.ESTUDIANTE }
@@ -42,8 +36,4 @@ class UsuariosViewModel : ViewModel() {
         _usuarios.add(usuario)
     }
 
-    fun inscribirMateria(idUsuario: String, idMateria: String) {
-        val usuario = _usuarios.find { it.id == idUsuario }
-        usuario?.idMateriasInscritas?.add(idMateria)
-    }
 }
