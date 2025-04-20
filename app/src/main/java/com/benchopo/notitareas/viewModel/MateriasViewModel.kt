@@ -15,7 +15,7 @@ class MateriasViewModel : ViewModel() {
         }
         if (titulo.isBlank()) return "El titulo no puede estar vacío."
 
-        _materias.add(Materia(titulo = titulo, idProfesor = idProfesor, idEstudiantesInscritos = estudiantes ))
+        _materias.add(Materia((materias.size + 1).toString() ,titulo = titulo, idProfesor = idProfesor, idEstudiantesInscritos = estudiantes ))
         return null
     }
 
