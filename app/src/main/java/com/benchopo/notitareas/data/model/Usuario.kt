@@ -1,12 +1,9 @@
 package com.benchopo.notitareas.data.model
 
-import java.util.UUID
-
 data class Usuario(
-    val id: String = UUID.randomUUID().toString(),
+    val id: String,
     val nombre: String,
-    val rol: Rol,
-    val idMateriasInscritas: MutableList<String> = mutableListOf()
+    val rol: Rol
 )
 
 enum class Rol {
