@@ -169,7 +169,7 @@ fun MateriasScreen(
 
                     val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
                     val bottomFade = Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
-                    val topBottomFade = Brush.verticalGradient(0f to Color.Transparent, 0.2f to Color.Red, 0.7f to Color.Red, 1f to Color.Transparent)
+                    val topBottomFade = Brush.verticalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.7f to Color.Red, 1f to Color.Transparent)
                     val leftRightFade = Brush.horizontalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.9f to Color.Red, 1f to Color.Transparent)
 
                     Column(
@@ -184,12 +184,17 @@ fun MateriasScreen(
                         ) {
                         resultadoEstudiantes.forEach { estudiante ->
 
+                            var estudianteSeleccionado by remember { mutableStateOf(false) }
+
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(
                                         Brush.horizontalGradient(
-                                            listOf(
+                                            if (estudianteSeleccionado) listOf(
+                                                Color(0xFF845EC2),
+                                                Color(0xFFD65DB1)
+                                            ) else listOf(
                                                 Color(0xFF4C1B93),
                                                 Color(0xFFAD187F)
                                             )
@@ -199,8 +204,15 @@ fun MateriasScreen(
                                     .padding(vertical = 10.dp)
                                     .padding(horizontal = 10.dp)
                                     .clickable(onClick = {
-                                        estudiantesParaInscribir.add(estudiante.id)
-                                        snackbarMessage = "${estudiante.nombre} fue agregado."
+                                        if (estudiantesParaInscribir.contains(estudiante.id)) {
+                                            estudiantesParaInscribir.remove(estudiante.id)
+                                            estudianteSeleccionado = false
+                                            snackbarMessage = "Estudiante ${estudiante.nombre} se removió."
+                                        } else {
+                                            estudiantesParaInscribir.add(estudiante.id)
+                                            estudianteSeleccionado = true
+                                            snackbarMessage = "Estudiante ${estudiante.nombre} se agregó."
+                                        }
                                     }),
                                 shape = RoundedCornerShape(20.dp),
                                 colors = CardDefaults.cardColors(containerColor = Color.Transparent),
