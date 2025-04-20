@@ -208,7 +208,7 @@ fun MateriasScreen(
                             snackbarMessage = error
                         } else {
                             snackbarMessage =
-                                "Materia agregada exitosamente. ${materiasViewModel.materias.last().idEstudiantesInscritos}"
+                                "Materia agregada exitosamente."
                             materia = ""
                             textSearch = ""
                             estudiantesParaInscribir = mutableListOf()
