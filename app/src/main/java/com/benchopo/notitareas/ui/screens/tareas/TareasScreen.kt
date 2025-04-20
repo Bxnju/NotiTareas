@@ -149,6 +149,7 @@ fun TareasScreen(
                         val materia =
                             materiasViewModel.materias.find { it.titulo == materiaSeleccionada }
                         val tarea = Tarea(
+                            id = (tareasViewModel.tareas.size + 1).toString(),
                             titulo = titulo,
                             descripcion = descripcion,
                             fechaEntrega = fechaEntrega,
@@ -177,6 +178,21 @@ fun TareasScreen(
                     thickness = 3.dp,
                     color = Color.LightGray
                 )
+            }
+
+
+            var tieneMaterias = false
+            var contMaterias = 0
+            materiasViewModel.materias.forEach {
+                if (it.idEstudiantesInscritos.contains(usuarioActual.id)) {
+                    tieneMaterias = true
+                    contMaterias++
+                }
+            }
+            if (tieneMaterias) {
+                snackbarMessage = "Tienes $contMaterias materias. ${usuarioActual.id}"
+            }else{
+                snackbarMessage = "No tienes materias. ${usuarioActual.id}"
             }
 
             Text("Filtrar por materia:", style = MaterialTheme.typography.titleMedium)
