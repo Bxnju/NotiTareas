@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.benchopo.notitareas.data.model.Materia
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.viewModel.MateriasViewModel
 import com.benchopo.notitareas.ui.components.Snackbar
@@ -220,8 +221,21 @@ fun MateriasScreen(
             if (materias.isEmpty()) {
                 EmptyMateriasMessage()
             } else {
+
+                var materiasPorEstudiante = mutableListOf<Materia>()
+
+                if (usuarioActual.rol == Rol.ESTUDIANTE) {
+
+                    materias.forEach { materia ->
+                        if (materia.idEstudiantesInscritos.contains(usuarioActual.id)) {
+                            materiasPorEstudiante.add(materia)
+                        }
+                    }
+
+                } else materiasPorEstudiante = materias as MutableList<Materia>
+
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    materias.forEach { materiaItem ->
+                    materiasPorEstudiante.forEach { materiaItem ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
