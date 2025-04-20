@@ -3,6 +3,7 @@ package com.benchopo.notitareas.ui.screens.materias
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -95,22 +96,27 @@ fun MateriasScreen(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = if (usuarioActual.rol == Rol.PROFESOR) Arrangement.SpaceBetween else Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (usuarioActual.rol == Rol.PROFESOR) Text(
-                    "Registrar Materias",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.SemiBold
-                ) else Text(
+                if (usuarioActual.rol == Rol.PROFESOR) {
+
+                    Text(
+                        "Registrar Materias",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.SemiBold
+
+                    )
+
+                    TextButton(onClick = onNavigateToTareas) {
+                        Text("Ir a Tareas")
+                    }
+                } else Text(
                     "Mis Materias",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.SemiBold
                 )
 
-                TextButton(onClick = onNavigateToTareas) {
-                    Text("Ir a Tareas")
-                }
 
             }
 
