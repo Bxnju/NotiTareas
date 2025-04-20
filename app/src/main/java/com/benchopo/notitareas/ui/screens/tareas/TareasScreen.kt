@@ -180,21 +180,6 @@ fun TareasScreen(
                 )
             }
 
-
-            var tieneMaterias = false
-            var contMaterias = 0
-            materiasViewModel.materias.forEach {
-                if (it.idEstudiantesInscritos.contains(usuarioActual.id)) {
-                    tieneMaterias = true
-                    contMaterias++
-                }
-            }
-            if (tieneMaterias) {
-                snackbarMessage = "Tienes $contMaterias materias. ${usuarioActual.id}"
-            }else{
-                snackbarMessage = "No tienes materias. ${usuarioActual.id}"
-            }
-
             Text("Filtrar por materia:", style = MaterialTheme.typography.titleMedium)
 
             val materiasDisponibles = tareasViewModel.obtenerMateriasUnicas()
