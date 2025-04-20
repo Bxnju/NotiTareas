@@ -96,7 +96,7 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.PROFESOR },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.PROFESOR) MaterialTheme.colorScheme.primary else Color.Gray,
+                        containerColor = if (rolSeleccionado == Rol.PROFESOR) MaterialTheme.colorScheme.primary else Color(0xFF252525),
                         contentColor = Color.White
                     )
                 ) {
@@ -105,7 +105,7 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.ESTUDIANTE },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE) MaterialTheme.colorScheme.primary else Color.Gray,
+                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE) MaterialTheme.colorScheme.primary else Color(0xFF252525),
                         contentColor = Color.White
                     )
                 ) {
