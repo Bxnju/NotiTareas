@@ -16,10 +16,14 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -68,6 +72,15 @@ fun MateriasScreen(
             Text("No hay materias registradas.", color = Color.Gray)
         }
     }
+
+    fun Modifier.fadingEdge(brush: Brush) = this
+        .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+        .drawWithContent {
+            drawContent()
+            drawRect(brush = brush, blendMode = BlendMode.DstIn)
+        }
+
+    // Main screen content
 
     Box(
         modifier = Modifier
@@ -153,10 +166,18 @@ fun MateriasScreen(
                 var resultadoEstudiantes = usuariosViewModel.buscarEstudiantesPorNombre(textSearch)
 
                 if (resultadoEstudiantes.isNotEmpty()) {
+
+                    val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
+                    val bottomFade = Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
+                    val topBottomFade = Brush.verticalGradient(0f to Color.Transparent, 0.2f to Color.Red, 0.7f to Color.Red, 1f to Color.Transparent)
+                    val leftRightFade = Brush.horizontalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.9f to Color.Red, 1f to Color.Transparent)
+
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
+                            .padding(vertical = 10.dp)
+                            .fadingEdge(topBottomFade)
                             .verticalScroll(rememberScrollState()),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
 
@@ -169,8 +190,8 @@ fun MateriasScreen(
                                     .background(
                                         Brush.horizontalGradient(
                                             listOf(
-                                                Color(0xFF845EC2),
-                                                Color(0xFFD65DB1)
+                                                Color(0xFF4C1B93),
+                                                Color(0xFFAD187F)
                                             )
                                         ),
                                         shape = RoundedCornerShape(20.dp)
@@ -193,6 +214,7 @@ fun MateriasScreen(
 
                         }
                     }
+
                 } else {
                     Text("No se encontraron resultados.")
                 }
