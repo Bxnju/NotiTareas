@@ -200,14 +200,8 @@ fun MateriasScreen(
                         if (error != null) {
                             snackbarMessage = error
                         } else {
-                            estudiantesParaInscribir.forEach {
-                                usuariosViewModel.inscribirMateria(
-                                    it,
-                                    materiasViewModel.materias.last().id
-                                )
-                            }
                             snackbarMessage =
-                                "Materia agregada exitosamente. ${estudiantesParaInscribir.size}"
+                                "Materia agregada exitosamente. ${materiasViewModel.materias.last().idEstudiantesInscritos}"
                             materia = ""
                             textSearch = ""
                             estudiantesParaInscribir = mutableListOf()
