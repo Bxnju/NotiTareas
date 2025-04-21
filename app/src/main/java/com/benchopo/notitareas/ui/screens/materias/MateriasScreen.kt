@@ -165,8 +165,11 @@ fun MateriasScreen(
                 var estudiantesParaInscribir by remember { mutableStateOf(mutableListOf<String>()) }
                 var resultadoEstudiantes = usuariosViewModel.buscarEstudiantesPorNombre(textSearch)
 
+                var estudiantesSeleccionadosStates = remember { mutableStateMapOf<String, Boolean>() }
+
                 if (resultadoEstudiantes.isNotEmpty()) {
 
+                    resultadoEstudiantes.forEach { estudiante -> estudiantesSeleccionadosStates[estudiante.id] = estudiantesParaInscribir.contains(estudiante.id) }
                     val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
                     val bottomFade = Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
                     val topBottomFade = Brush.verticalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.7f to Color.Red, 1f to Color.Transparent)
@@ -184,13 +187,12 @@ fun MateriasScreen(
                         ) {
                         resultadoEstudiantes.forEach { estudiante ->
 
-                            var estudianteSeleccionado by remember { mutableStateOf(false) }
-
+                            val estudianteSeleccionado = estudiantesSeleccionadosStates[estudiante.id] ?: false
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(
-                                        Brush.horizontalGradient(
+                                        brush = Brush.horizontalGradient(
                                             if (estudianteSeleccionado) listOf(
                                                 Color(0xFF845EC2),
                                                 Color(0xFFD65DB1)
@@ -206,11 +208,11 @@ fun MateriasScreen(
                                     .clickable(onClick = {
                                         if (estudiantesParaInscribir.contains(estudiante.id)) {
                                             estudiantesParaInscribir.remove(estudiante.id)
-                                            estudianteSeleccionado = false
+                                            estudiantesSeleccionadosStates[estudiante.id] = false
                                             snackbarMessage = "Estudiante ${estudiante.nombre} se removió."
                                         } else {
                                             estudiantesParaInscribir.add(estudiante.id)
-                                            estudianteSeleccionado = true
+                                            estudiantesSeleccionadosStates[estudiante.id] = true
                                             snackbarMessage = "Estudiante ${estudiante.nombre} se agregó."
                                         }
                                     }),
@@ -246,6 +248,7 @@ fun MateriasScreen(
                             materia = ""
                             textSearch = ""
                             estudiantesParaInscribir = mutableListOf()
+                            estudiantesSeleccionadosStates.clear()
                         }
                     },
                     shape = RoundedCornerShape(12.dp)
