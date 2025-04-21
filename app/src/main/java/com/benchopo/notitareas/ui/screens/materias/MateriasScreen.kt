@@ -165,15 +165,30 @@ fun MateriasScreen(
                 var estudiantesParaInscribir by remember { mutableStateOf(mutableListOf<String>()) }
                 var resultadoEstudiantes = usuariosViewModel.buscarEstudiantesPorNombre(textSearch)
 
-                var estudiantesSeleccionadosStates = remember { mutableStateMapOf<String, Boolean>() }
+                var estudiantesSeleccionadosStates =
+                    remember { mutableStateMapOf<String, Boolean>() }
 
                 if (resultadoEstudiantes.isNotEmpty()) {
 
-                    resultadoEstudiantes.forEach { estudiante -> estudiantesSeleccionadosStates[estudiante.id] = estudiantesParaInscribir.contains(estudiante.id) }
+                    resultadoEstudiantes.forEach { estudiante ->
+                        estudiantesSeleccionadosStates[estudiante.id] =
+                            estudiantesParaInscribir.contains(estudiante.id)
+                    }
                     val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
-                    val bottomFade = Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
-                    val topBottomFade = Brush.verticalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.7f to Color.Red, 1f to Color.Transparent)
-                    val leftRightFade = Brush.horizontalGradient(0f to Color.Transparent, 0.1f to Color.Red, 0.9f to Color.Red, 1f to Color.Transparent)
+                    val bottomFade =
+                        Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
+                    val topBottomFade = Brush.verticalGradient(
+                        0f to Color.Transparent,
+                        0.1f to Color.Red,
+                        0.7f to Color.Red,
+                        1f to Color.Transparent
+                    )
+                    val leftRightFade = Brush.horizontalGradient(
+                        0f to Color.Transparent,
+                        0.1f to Color.Red,
+                        0.9f to Color.Red,
+                        1f to Color.Transparent
+                    )
 
                     Column(
                         modifier = Modifier
@@ -187,7 +202,8 @@ fun MateriasScreen(
                         ) {
                         resultadoEstudiantes.forEach { estudiante ->
 
-                            val estudianteSeleccionado = estudiantesSeleccionadosStates[estudiante.id] ?: false
+                            val estudianteSeleccionado =
+                                estudiantesSeleccionadosStates[estudiante.id] ?: false
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -209,11 +225,13 @@ fun MateriasScreen(
                                         if (estudiantesParaInscribir.contains(estudiante.id)) {
                                             estudiantesParaInscribir.remove(estudiante.id)
                                             estudiantesSeleccionadosStates[estudiante.id] = false
-                                            snackbarMessage = "Estudiante ${estudiante.nombre} se removió."
+                                            snackbarMessage =
+                                                "Estudiante ${estudiante.nombre} se removió."
                                         } else {
                                             estudiantesParaInscribir.add(estudiante.id)
                                             estudiantesSeleccionadosStates[estudiante.id] = true
-                                            snackbarMessage = "Estudiante ${estudiante.nombre} se agregó."
+                                            snackbarMessage =
+                                                "Estudiante ${estudiante.nombre} se agregó."
                                         }
                                     }),
                                 shape = RoundedCornerShape(20.dp),
@@ -310,20 +328,22 @@ fun MateriasScreen(
                                     style = MaterialTheme.typography.bodyLarge
                                 )
 
-                                IconButton(
-                                    onClick = {
-                                        materiasViewModel.eliminarMateria(materiaItem.id)
-                                        snackbarMessage = "Materia eliminada."
-                                    },
-                                    modifier = Modifier
-                                        .size(36.dp)
-                                        .background(Color(0x40FFFFFF), CircleShape)
-                                ) {
-                                    Icon(
-                                        Icons.Default.Delete,
-                                        contentDescription = "Eliminar",
-                                        tint = Color.White
-                                    )
+                                if (usuarioActual.rol == Rol.PROFESOR) {
+                                    IconButton(
+                                        onClick = {
+                                            materiasViewModel.eliminarMateria(materiaItem.id)
+                                            snackbarMessage = "Materia eliminada."
+                                        },
+                                        modifier = Modifier
+                                            .size(36.dp)
+                                            .background(Color(0x40FFFFFF), CircleShape)
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = "Eliminar",
+                                            tint = Color.White
+                                        )
+                                    }
                                 }
                             }
                         }
