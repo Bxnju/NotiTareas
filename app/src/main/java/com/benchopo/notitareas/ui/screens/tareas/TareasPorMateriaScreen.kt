@@ -71,7 +71,7 @@ fun TareasPorMateriaScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AppTitle(usuarioActual!!.nombre)
+            AppTitle(navController, authViewModel, usuarioActual!!.nombre)
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { navController.popBackStack() }) {
