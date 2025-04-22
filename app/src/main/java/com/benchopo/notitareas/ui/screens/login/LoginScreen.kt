@@ -28,6 +28,9 @@ fun LoginScreen(
     authViewModel: AuthViewModel = viewModel(),
     usuariosViewModel: UsuariosViewModel = viewModel()
 ) {
+
+    authViewModel.logout()
+
     var nombre by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rolSeleccionado by remember { mutableStateOf<Rol?>(null) }
