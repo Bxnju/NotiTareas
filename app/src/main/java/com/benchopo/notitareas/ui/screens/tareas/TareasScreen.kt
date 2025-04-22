@@ -89,7 +89,7 @@ fun TareasScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AppTitle(usuarioActual!!.nombre)
+            AppTitle(navController, authViewModel, usuarioActual!!.nombre)
 
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
