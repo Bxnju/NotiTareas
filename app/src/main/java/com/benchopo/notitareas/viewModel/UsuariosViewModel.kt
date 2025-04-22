@@ -1,10 +1,8 @@
 package com.benchopo.notitareas.viewModel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.data.model.Usuario
-import java.util.UUID
 
 class UsuariosViewModel : ViewModel() {
     private val _usuarios = mutableListOf(
@@ -18,9 +16,9 @@ class UsuariosViewModel : ViewModel() {
     )
     val usuarios: List<Usuario> get() = _usuarios
 
-    fun buscarEstudiantes(): List<Usuario> {
-        return _usuarios.filter { it.rol == Rol.ESTUDIANTE }
-    }
+//    fun buscarEstudiantes(): List<Usuario> {
+//        return _usuarios.filter { it.rol == Rol.ESTUDIANTE }
+//    }
 
     fun buscarEstudiantesPorNombre(nombre: String): List<Usuario> {
         return _usuarios.filter {
