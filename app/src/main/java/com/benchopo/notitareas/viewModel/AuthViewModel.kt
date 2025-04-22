@@ -16,7 +16,7 @@ class AuthViewModel : ViewModel() {
         val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.password == password && it.rol == rol }
 
         if (existente == null) {
-            return "No existe un usuario con ese nombre y rol."
+            return "No existe un usuario con esas credenciales y ese rol."
         }else{
             usuarioActual = existente
             return null
