@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Tema principal de la app -->
     <style name="Theme.NotiTareas" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Tema para el splash screen -->
+    <style name="Theme.NotiTareas.Splash" parent="Theme.SplashScreen">
+        <!-- Color de fondo del splash -->
+        <item name="windowSplashScreenBackground">@color/backgroud_aplication</item>
+
+        <!-- Ícono del splash (tu vector creado) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+
+        <!-- Fondo detrás del ícono (opcional) -->
+        <item name="windowSplashScreenIconBackgroundColor">@color/backgroud_aplication</item>
+    </style>
+
 </resources>
