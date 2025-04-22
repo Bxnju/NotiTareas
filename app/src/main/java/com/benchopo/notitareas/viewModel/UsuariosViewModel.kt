@@ -8,13 +8,13 @@ import java.util.UUID
 
 class UsuariosViewModel : ViewModel() {
     private val _usuarios = mutableListOf(
-        Usuario(id = 1.toString(), nombre = "Ana", rol = Rol.ESTUDIANTE),
-        Usuario(id = 2.toString(), nombre = "Luis", rol = Rol.ESTUDIANTE),
-        Usuario(id = 3.toString(), nombre = "Carlos", rol = Rol.PROFESOR),
-        Usuario(id = 4.toString(), nombre = "Laura", rol = Rol.ESTUDIANTE),
-        Usuario(id = 5.toString(), nombre = "Pedro", rol = Rol.PROFESOR),
-        Usuario(id = 6.toString(), nombre = "María", rol = Rol.ESTUDIANTE),
-        Usuario(id = 7.toString(), nombre = "Juan", rol = Rol.PROFESOR),
+        Usuario(id = 1.toString(), nombre = "Ana", rol = Rol.ESTUDIANTE, email = "ana@notitareas.com", password = "pass"),
+        Usuario(id = 2.toString(), nombre = "Luis", rol = Rol.ESTUDIANTE, email = "luis@notitareas.com", password = "pass"),
+        Usuario(id = 3.toString(), nombre = "Carlos", rol = Rol.PROFESOR, email = "carlos@notitareas.com", password = "pass"),
+        Usuario(id = 4.toString(), nombre = "Laura", rol = Rol.ESTUDIANTE, email = "laura@notitareas.com", password = "pass"),
+        Usuario(id = 5.toString(), nombre = "Pedro", rol = Rol.PROFESOR, email = "pedro@notitareas.com", password = "pass"),
+        Usuario(id = 6.toString(), nombre = "María", rol = Rol.ESTUDIANTE, email = "maria@notitareas.com", password = "pass"),
+        Usuario(id = 7.toString(), nombre = "Juan", rol = Rol.PROFESOR, email = "juan@notitareas.com", password = "pass"),
     )
     val usuarios: List<Usuario> get() = _usuarios
 
