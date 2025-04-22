@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -170,21 +169,21 @@ fun MateriasScreen(
                         estudiantesSeleccionadosStates[estudiante.id] =
                             estudiantesParaInscribir.contains(estudiante.id)
                     }
-                    val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
-                    val bottomFade =
-                        Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
+//                    val topFade = Brush.verticalGradient(0f to Color.Transparent, 0.3f to Color.Red)
+//                    val bottomFade =
+//                        Brush.verticalGradient(0.7f to Color.Red, 1f to Color.Transparent)
                     val topBottomFade = Brush.verticalGradient(
                         0f to Color.Transparent,
                         0.1f to Color.Red,
                         0.7f to Color.Red,
                         1f to Color.Transparent
                     )
-                    val leftRightFade = Brush.horizontalGradient(
-                        0f to Color.Transparent,
-                        0.1f to Color.Red,
-                        0.9f to Color.Red,
-                        1f to Color.Transparent
-                    )
+//                    val leftRightFade = Brush.horizontalGradient(
+//                        0f to Color.Transparent,
+//                        0.1f to Color.Red,
+//                        0.9f to Color.Red,
+//                        1f to Color.Transparent
+//                    )
 
                     Column(
                         modifier = Modifier
