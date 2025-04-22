@@ -86,11 +86,7 @@ fun MateriasScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.linearGradient(
-                    listOf(Color(0xFF180042), Color(0xFF340026)),
-                    start = Offset.Zero,
-                    end = Offset.Infinite
-                ),
+                Color(0xFF180042)
             )
 
     ) {
@@ -275,7 +271,7 @@ fun MateriasScreen(
                 }
             }
 
-            HorizontalDivider(thickness = 3.dp, color = Color.LightGray)
+            HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
 
             Text("Materias registradas:", style = MaterialTheme.typography.titleMedium)
 
