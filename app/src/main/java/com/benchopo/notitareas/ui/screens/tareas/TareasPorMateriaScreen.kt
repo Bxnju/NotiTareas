@@ -59,11 +59,7 @@ fun TareasPorMateriaScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.linearGradient(
-                    listOf(Color(0xFF180042), Color(0xFF340026)),
-                    start = Offset.Zero,
-                    end = Offset.Infinite
-                ),
+                Color(0xFF180042)
             )
     ) {
         Snackbar(snackbarHostState)
