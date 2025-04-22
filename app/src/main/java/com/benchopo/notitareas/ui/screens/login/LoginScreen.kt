@@ -29,6 +29,7 @@ fun LoginScreen(
     usuariosViewModel: UsuariosViewModel = viewModel()
 ) {
     var nombre by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var rolSeleccionado by remember { mutableStateOf<Rol?>(null) }
 
     val snackbarHostState = rememberSnackbarHostState()
@@ -92,6 +93,14 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Tu contraseña") }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Button(
                     onClick = { rolSeleccionado = Rol.PROFESOR },
@@ -119,7 +128,7 @@ fun LoginScreen(
                 onClick = {
                     if (nombre.isNotBlank() && rolSeleccionado != null) {
                         val error =
-                            authViewModel.login(nombre, rolSeleccionado!!, usuariosViewModel)
+                            authViewModel.login(nombre, password,  rolSeleccionado!!, usuariosViewModel)
                         if (error != null) {
                             snackbarMessage = error
                         } else {
