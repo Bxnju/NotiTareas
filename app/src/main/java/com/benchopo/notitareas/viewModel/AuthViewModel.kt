@@ -11,9 +11,9 @@ class AuthViewModel : ViewModel() {
     var usuarioActual by mutableStateOf<Usuario?>(null)
         private set
 
-    fun login(nombre: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
+    fun login(nombre: String, password: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
         // Buscar si ya existe el usuario
-        val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.rol == rol }
+        val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.password == password && it.rol == rol }
 
         if (existente == null) {
             return "No existe un usuario con ese nombre y rol."
@@ -24,14 +24,14 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun register(id : String, nombre: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
+    fun register(id : String, nombre: String, email: String, password: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
         // Buscar si ya existe el usuario
         val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.rol == rol }
 
         if (existente != null) {
             return "Ya existe un usuario con ese nombre y rol."
         }else{
-            usuarioActual = Usuario(id = id, nombre = nombre, rol = rol).also {
+            usuarioActual = Usuario(id = id, nombre = nombre, email = email, password = password, rol = rol).also {
                 usuariosViewModel.agregarUsuario(it)
             }
             return null
