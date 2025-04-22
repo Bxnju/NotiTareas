@@ -1,5 +1,6 @@
 package com.benchopo.notitareas.ui.screens.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,12 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.benchopo.notitareas.R
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
@@ -46,11 +48,7 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.linearGradient(
-                    listOf(Color(0xFF180042), Color(0xFF340026)),
-                    start = Offset.Zero,
-                    end = Offset.Infinite
-                ),
+                Color(0xFF180042)
             )
     ) {
         Snackbar(snackbarHostState)
@@ -66,23 +64,24 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(
-                        Brush.linearGradient(
-                            listOf(Color(0xFF4710EE), Color(0xFF9031CB))
-                        ), shape = RoundedCornerShape(30.dp)
-                    )
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row{
-                    Text(
-                        text = "NotiTareas",
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+
+                Image(
+                    painter = painterResource(id = R.drawable.icon),
+                    contentDescription = "Logo NotiTareas",
+                    modifier = Modifier
+                        .size(150.dp)
+                )
+
+                Text(
+                    text = "NotiTareas",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -107,7 +106,9 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.PROFESOR },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.PROFESOR) MaterialTheme.colorScheme.primary else Color(0xFF252525),
+                        containerColor = if (rolSeleccionado == Rol.PROFESOR) MaterialTheme.colorScheme.primary else Color(
+                            0xFF252525
+                        ),
                         contentColor = Color.White
                     )
                 ) {
@@ -116,7 +117,9 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.ESTUDIANTE },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE) MaterialTheme.colorScheme.primary else Color(0xFF252525),
+                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE) MaterialTheme.colorScheme.primary else Color(
+                            0xFF252525
+                        ),
                         contentColor = Color.White
                     )
                 ) {
@@ -130,7 +133,12 @@ fun LoginScreen(
                 onClick = {
                     if (nombre.isNotBlank() && rolSeleccionado != null) {
                         val error =
-                            authViewModel.login(nombre, password,  rolSeleccionado!!, usuariosViewModel)
+                            authViewModel.login(
+                                nombre,
+                                password,
+                                rolSeleccionado!!,
+                                usuariosViewModel
+                            )
                         if (error != null) {
                             snackbarMessage = error
                         } else {
