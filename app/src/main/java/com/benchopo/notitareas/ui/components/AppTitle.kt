@@ -46,7 +46,7 @@ fun AppTitle(usuarioNombre: String) {
             )
 
             Text(
-                text = "Bienvenido $usuarioNombre",
+                text = "Bienvenid@ $usuarioNombre",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
