@@ -168,10 +168,17 @@ fun TareasPorMateriaScreen(
                                                     tareasViewModel.marcarComoCompletada(
                                                         tarea, usuarioActual.id
                                                     )
-                                                } else tareasViewModel.marcarComoIncompleta(
-                                                    tarea,
-                                                    usuarioActual.id
-                                                )
+                                                    completadaPorEstudiante = true
+
+                                                } else {
+                                                    tareasViewModel.marcarComoIncompleta(
+                                                        tarea,
+                                                        usuarioActual.id
+                                                    )
+
+                                                    completadaPorEstudiante = false
+
+                                                }
                                             },
                                         ) {
                                             Icon(
