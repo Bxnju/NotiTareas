@@ -100,7 +100,7 @@ fun TareasPorMateriaScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     tareasFiltradas.forEach { tarea ->
 
-                        var completadaPorEstudiante = false
+                        var completadaPorEstudiante = mutableStateOf(false).value
                         tarea.completadaPor.forEach {
                             if (it == usuarioActual.id) {
                                 completadaPorEstudiante = true
@@ -162,15 +162,16 @@ fun TareasPorMateriaScreen(
                                         IconButton(
                                             onClick = {
                                                 if (!completadaPorEstudiante) {
+                                                    completadaPorEstudiante = true
                                                     snackbarMessage =
                                                         "Tarea marcada como completada 🎉"
 
                                                     tareasViewModel.marcarComoCompletada(
                                                         tarea, usuarioActual.id
                                                     )
-                                                    completadaPorEstudiante = true
 
                                                 } else {
+                                                    completadaPorEstudiante = false
                                                     tareasViewModel.marcarComoIncompleta(
                                                         tarea,
                                                         usuarioActual.id
@@ -179,7 +180,6 @@ fun TareasPorMateriaScreen(
                                                     snackbarMessage =
                                                         "Tarea marcada como incompleta 😔"
 
-                                                    completadaPorEstudiante = false
 
                                                 }
                                             },
