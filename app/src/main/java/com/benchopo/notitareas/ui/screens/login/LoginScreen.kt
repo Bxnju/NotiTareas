@@ -3,6 +3,8 @@ package com.benchopo.notitareas.ui.screens.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
@@ -28,8 +30,6 @@ fun LoginScreen(
     authViewModel: AuthViewModel = viewModel(),
     usuariosViewModel: UsuariosViewModel = viewModel()
 ) {
-
-    authViewModel.logout()
 
     var nombre by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -57,8 +57,10 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp),
-            verticalArrangement = Arrangement.Center,
+                .padding(top = 50.dp)
+                .imePadding()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -75,13 +77,6 @@ fun LoginScreen(
                     contentDescription = "Logo NotiTareas",
                     modifier = Modifier
                         .size(150.dp)
-                )
-
-                Text(
-                    text = "NotiTareas",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
                 )
             }
 
