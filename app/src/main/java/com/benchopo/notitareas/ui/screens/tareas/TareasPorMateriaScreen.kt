@@ -68,7 +68,8 @@ fun TareasPorMateriaScreen(
                 .fillMaxSize()
                 .padding(horizontal = 20.dp)
                 .padding(top = 24.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .imePadding(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AppTitle(navController, authViewModel, usuarioActual!!.nombre)
