@@ -96,7 +96,8 @@ fun MateriasScreen(
                 .fillMaxSize()
                 .padding(horizontal = 20.dp)
                 .padding(vertical = 24.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .imePadding(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AppTitle(navController, authViewModel, usuarioActual!!.nombre)
@@ -191,7 +192,8 @@ fun MateriasScreen(
                             .height(200.dp)
                             .padding(vertical = 10.dp)
                             .fadingEdge(topBottomFade)
-                            .verticalScroll(rememberScrollState()),
+                            .verticalScroll(rememberScrollState())
+                            .imePadding(),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
 
                         ) {
