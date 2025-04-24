@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.benchopo.notitareas.ui.navigation.NotiTareasNavGraph
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            NotiTareasTheme {
+            NotiTareasTheme (darkTheme = true){
                 Surface {
                     val navController = rememberNavController()
                     val materiasViewModel: MateriasViewModel = viewModel()
