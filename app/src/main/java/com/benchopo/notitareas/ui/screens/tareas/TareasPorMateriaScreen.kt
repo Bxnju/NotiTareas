@@ -176,6 +176,9 @@ fun TareasPorMateriaScreen(
                                                         usuarioActual.id
                                                     )
 
+                                                    snackbarMessage =
+                                                        "Tarea marcada como incompleta 😔"
+
                                                     completadaPorEstudiante = false
 
                                                 }
