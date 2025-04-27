@@ -31,9 +31,9 @@ class AuthViewModel : ViewModel() {
         if (existente != null) {
             return "Ya existe un usuario con ese nombre y rol."
         }else{
-            usuarioActual = Usuario(id = id, nombre = nombre, email = email, password = password, rol = rol).also {
-                usuariosViewModel.agregarUsuario(it)
-            }
+            usuarioActual = Usuario(id = id, nombre = nombre, email = email, password = password, rol = rol)
+            usuariosViewModel.agregarUsuario(usuarioActual!!)
+
             return null
         }
     }
