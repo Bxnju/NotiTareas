@@ -14,7 +14,7 @@ class UsuariosViewModel : ViewModel() {
         Usuario(id = 6.toString(), nombre = "María", rol = Rol.ESTUDIANTE, email = "maria@notitareas.com", password = "pass"),
         Usuario(id = 7.toString(), nombre = "Juan", rol = Rol.PROFESOR, email = "juan@notitareas.com", password = "pass"),
     )
-    val usuarios: List<Usuario> get() = _usuarios
+    var usuarios = _usuarios
 
 //    fun buscarEstudiantes(): List<Usuario> {
 //        return _usuarios.filter { it.rol == Rol.ESTUDIANTE }
@@ -32,6 +32,7 @@ class UsuariosViewModel : ViewModel() {
 
     fun agregarUsuario(usuario: Usuario) {
         _usuarios.add(usuario)
+        usuarios = _usuarios
     }
 
 }
