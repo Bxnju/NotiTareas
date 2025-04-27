@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.benchopo.notitareas.ui.screens.login.LoginScreen
 import com.benchopo.notitareas.ui.screens.materias.MateriasScreen
+import com.benchopo.notitareas.ui.screens.register.RegisterScreen
 import com.benchopo.notitareas.ui.screens.tareas.TareasPorMateriaScreen
 import com.benchopo.notitareas.ui.screens.tareas.TareasScreen
 import com.benchopo.notitareas.viewModel.AuthViewModel
@@ -18,6 +19,7 @@ object Routes {
     const val Login = "login"
     const val Materias = "materias"
     const val Tareas = "tareas"
+    const val Register = "register"
 }
 
 @Composable
@@ -31,12 +33,17 @@ fun NotiTareasNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Login, // ← ahora inicia aquí
+        startDestination = Routes.Login,
         modifier = modifier
     ) {
         composable(Routes.Login) {
             LoginScreen(navController = navController, authViewModel = authViewModel)
         }
+
+        composable("register") {
+            RegisterScreen(navController = navController, authViewModel = authViewModel, usuariosViewModel = usuariosViewModel)
+        }
+
 
         composable(Routes.Materias) {
             MateriasScreen(
