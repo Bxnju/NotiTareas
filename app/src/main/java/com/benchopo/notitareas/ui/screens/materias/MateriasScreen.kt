@@ -102,7 +102,6 @@ fun MateriasScreen(
         ) {
             AppTitle(navController, authViewModel, usuarioActual!!.nombre)
 
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = if (usuarioActual.rol == Rol.PROFESOR) Arrangement.SpaceBetween else Arrangement.Start,
@@ -125,7 +124,6 @@ fun MateriasScreen(
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.SemiBold
                 )
-
 
             }
 
