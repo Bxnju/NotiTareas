@@ -21,8 +21,8 @@ import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.ui.components.Snackbar
 import com.benchopo.notitareas.ui.components.rememberSnackbarHostState
 import com.benchopo.notitareas.viewModel.AuthViewModel
-import com.benchopo.notitareas.ui.navigation.Routes
 import com.benchopo.notitareas.viewModel.UsuariosViewModel
+import com.benchopo.notitareas.ui.navigation.Routes
 
 @Composable
 fun LoginScreen(
@@ -30,7 +30,6 @@ fun LoginScreen(
     authViewModel: AuthViewModel = viewModel(),
     usuariosViewModel: UsuariosViewModel = viewModel()
 ) {
-
     var nombre by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rolSeleccionado by remember { mutableStateOf<Rol?>(null) }
@@ -48,9 +47,7 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Color(0xFF180042)
-            )
+            .background(Color(0xFF180042))
     ) {
         Snackbar(snackbarHostState)
 
@@ -63,7 +60,6 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -71,12 +67,10 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.spacedBy(5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Image(
                     painter = painterResource(id = R.drawable.icon),
                     contentDescription = "Logo NotiTareas",
-                    modifier = Modifier
-                        .size(150.dp)
+                    modifier = Modifier.size(150.dp)
                 )
             }
 
@@ -102,9 +96,9 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.PROFESOR },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.PROFESOR) MaterialTheme.colorScheme.primary else Color(
-                            0xFF252525
-                        ),
+                        containerColor = if (rolSeleccionado == Rol.PROFESOR)
+                            MaterialTheme.colorScheme.primary
+                        else Color(0xFF252525),
                         contentColor = Color.White
                     )
                 ) {
@@ -113,9 +107,9 @@ fun LoginScreen(
                 Button(
                     onClick = { rolSeleccionado = Rol.ESTUDIANTE },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE) MaterialTheme.colorScheme.primary else Color(
-                            0xFF252525
-                        ),
+                        containerColor = if (rolSeleccionado == Rol.ESTUDIANTE)
+                            MaterialTheme.colorScheme.primary
+                        else Color(0xFF252525),
                         contentColor = Color.White
                     )
                 ) {
@@ -128,13 +122,12 @@ fun LoginScreen(
             Button(
                 onClick = {
                     if (nombre.isNotBlank() && rolSeleccionado != null) {
-                        val error =
-                            authViewModel.login(
-                                nombre,
-                                password,
-                                rolSeleccionado!!,
-                                usuariosViewModel
-                            )
+                        val error = authViewModel.login(
+                            nombre,
+                            password,
+                            rolSeleccionado!!,
+                            usuariosViewModel
+                        )
                         if (error != null) {
                             snackbarMessage = error
                         } else {
@@ -150,7 +143,30 @@ fun LoginScreen(
             ) {
                 Text("Ingresar")
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "¿No tienes cuenta?",
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                TextButton(
+                    onClick = { navController.navigate(Routes.Register) }
+                ) {
+                    Text(
+                        text = "Regístrate aquí",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
         }
     }
-
 }
