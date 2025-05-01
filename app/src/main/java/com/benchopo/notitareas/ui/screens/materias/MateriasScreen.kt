@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.benchopo.notitareas.controller.MateriasController
 import com.benchopo.notitareas.data.model.Materia
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.viewModel.MateriasViewModel
@@ -52,6 +53,8 @@ fun MateriasScreen(
 
     val snackbarHostState = rememberSnackbarHostState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
+
+
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {

@@ -1,9 +1,12 @@
 package com.benchopo.notitareas.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.benchopo.notitareas.controller.TareasController
+import com.benchopo.notitareas.controller.UsuariosController
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.data.model.Usuario
 
@@ -11,31 +14,35 @@ class AuthViewModel : ViewModel() {
     var usuarioActual by mutableStateOf<Usuario?>(null)
         private set
 
-    fun login(nombre: String, password: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
-        // Buscar si ya existe el usuario
-        val existente = usuariosViewModel.usuarios.find { it.nombre.trim().contentEquals(nombre.trim(), ignoreCase = true) && it.password == password && it.rol == rol }
+    fun login(nombre: String, password: String, rol: Rol, callback: (String?) -> Unit) {
+        val email = ""
+        UsuariosController().getUsers(nombre, password, rol) { usuarioEncontrado ->
+            if (usuarioEncontrado == null) {
+                callback(null)
 
-        if (existente == null) {
-            return "No existe un usuario con esas credenciales y ese rol."
-        }else{
-            usuarioActual = existente
-            return null
+            } else {
+                usuarioActual = usuarioEncontrado
+                callback("Usuario existente")
+            }
         }
-
     }
 
-    fun register(id : String, nombre: String, email: String, password: String, rol: Rol, usuariosViewModel: UsuariosViewModel): String? {
-        // Buscar si ya existe el usuario
-        val existente = usuariosViewModel.usuarios.find { it.nombre.contentEquals(nombre, ignoreCase = true) && it.rol == rol }
 
-        if (existente != null) {
-            return "Ya existe un usuario con ese nombre y rol."
-        }else{
-            usuarioActual = Usuario(id = id, nombre = nombre, email = email, password = password, rol = rol)
-            usuariosViewModel.agregarUsuario(usuarioActual!!)
+    fun register(nombre: String, email: String, password: String, rol: Rol, callback: (String?) -> Unit) {
 
-            return null
+        //Usario existe?
+        UsuariosController().getUsers(nombre, email, password, rol) { usuarioEncontrado ->
+            if (usuarioEncontrado == null) {
+                //No existe el usuario, crearlo
+                UsuariosController().setUser(nombre, email, password, rol)
+                callback("Usuario registrado correctamente.")
+            } else {
+                callback(null)
+
+            }
         }
+
+
     }
 
     fun logout() {

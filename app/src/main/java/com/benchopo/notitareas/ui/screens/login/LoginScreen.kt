@@ -122,16 +122,17 @@ fun LoginScreen(
             Button(
                 onClick = {
                     if (nombre.isNotBlank() && rolSeleccionado != null) {
-                        val error = authViewModel.login(
+                        authViewModel.login(
                             nombre,
                             password,
-                            rolSeleccionado!!,
-                            usuariosViewModel
-                        )
-                        if (error != null) {
-                            snackbarMessage = error
-                        } else {
-                            navController.navigate(Routes.Materias)
+                            rolSeleccionado!!)
+                        {
+                                error ->
+                            if (error == null) {
+                                snackbarMessage = error
+                            } else {
+                                navController.navigate(Routes.Materias)
+                            }
                         }
                     }
                 },

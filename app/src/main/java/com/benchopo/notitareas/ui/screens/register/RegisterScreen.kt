@@ -119,19 +119,17 @@ fun RegisterScreen(
             Button(
                 onClick = {
                     if (nombre.isNotBlank() && email.isNotBlank() && password.isNotBlank() && rolSeleccionado != null) {
-                        val error = authViewModel.register(
-                            id = (usuariosViewModel.usuarios.size + 1).toString(),
+                        authViewModel.register(
                             nombre = nombre,
                             email = email,
                             password = password,
-                            rol = rolSeleccionado!!,
-                            usuariosViewModel = usuariosViewModel
-                        )
-                        if (error != null) {
-                            snackbarMessage = error
-                        } else {
-                            snackbarMessage = "Usuario registrado correctamente."
-                            navController.navigate("login")
+                            rol = rolSeleccionado!!)
+                        {
+                                error ->
+                            if (error != null) {
+                                snackbarMessage = "Usuario registrado correctamente."
+                                navController.navigate("login")
+                            }
                         }
                     } else {
                         snackbarMessage = "Completa todos los campos."
