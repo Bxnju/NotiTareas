@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "685637299952",
+    "firebase_url": "",
+    "project_id": "notitareasprueba",
+    "storage_bucket": "notitareasprueba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685637299952:android:dfd04b495744b30a491c35",
+        "android_client_info": {
+          "package_name": "aasasaa.co.co"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685637299952:android:75635b64d1f23958491c35",
+        "android_client_info": {
+          "package_name": "com.benchopo.notitareas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
