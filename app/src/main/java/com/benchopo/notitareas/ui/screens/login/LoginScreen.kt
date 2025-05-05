@@ -30,7 +30,7 @@ fun LoginScreen(
     authViewModel: AuthViewModel = viewModel(),
     usuariosViewModel: UsuariosViewModel = viewModel()
 ) {
-    var nombre by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var rolSeleccionado by remember { mutableStateOf<Rol?>(null) }
 
@@ -77,9 +77,9 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
-                value = nombre,
-                onValueChange = { nombre = it },
-                label = { Text("Tu nombre") }
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Tu email") }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -121,9 +121,9 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    if (nombre.isNotBlank() && rolSeleccionado != null) {
+                    if (email.isNotBlank() && rolSeleccionado != null) {
                         authViewModel.login(
-                            nombre,
+                            email,
                             password,
                             rolSeleccionado!!)
                         {
@@ -136,7 +136,7 @@ fun LoginScreen(
                         }
                     }
                 },
-                enabled = nombre.isNotBlank() && rolSeleccionado != null,
+                enabled = email.isNotBlank() && rolSeleccionado != null,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White

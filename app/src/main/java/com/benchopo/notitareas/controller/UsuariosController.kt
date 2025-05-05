@@ -13,20 +13,20 @@ class UsuariosController {
     private val usersRef = db.collection("users")
 
 
-    fun getUsers(nombre: String, password: String, rol: Rol, callback: (Usuario?) -> Unit) {
+    fun getUsers(email: String, password: String, rol: Rol, callback: (Usuario?) -> Unit) {
         usersRef
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val nombredb = document.getString("nombre")?.trim()
+                    val emaildb = document.getString("email")?.trim()
                     val passworddb = document.getString("password")
                     val roldb = document.getString("rol")
 
-                    if (nombredb == nombre.trim() && passworddb == password && roldb == rol.toString()) {
+                    if (emaildb == email.trim() && passworddb == password && roldb == rol.toString()) {
                         val usuario = Usuario(
                             id = document.id,
-                            nombre = nombredb,
-                            email = document.getString("email") ?: "",
+                            nombre = document.getString("nombre") ?: "",
+                            email = emaildb,
                             password = passworddb ?: "",
                             rol = Rol.valueOf(roldb)
                         )

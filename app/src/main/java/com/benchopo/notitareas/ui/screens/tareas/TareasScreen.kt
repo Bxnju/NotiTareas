@@ -46,13 +46,13 @@ fun TareasScreen(
     var fechaEntrega by remember { mutableStateOf("") }
     var materiaSeleccionada by remember { mutableStateOf("") }
 
-    val materiasNombres = materiasViewModel.materias.map { it.titulo }
+    val usuarioActual = authViewModel.usuarioActual
+    val materiasNombres = materiasViewModel.obtenerMateriaPorIdUsuario(usuarioActual!!.id).map { it.titulo }
     val context = LocalContext.current
     val calendario = Calendar.getInstance()
     val snackbarHostState = remember { SnackbarHostState() }
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
-    val usuarioActual = authViewModel.usuarioActual
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let {
@@ -217,13 +217,23 @@ fun TareasScreen(
 
             Text("Tareas registradas:", style = MaterialTheme.typography.titleMedium)
 
-            if (tareasFiltradas.isEmpty()) {
-                EmptyTareasMessage()
-            } else {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    tareasFiltradas.forEach { tarea ->
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                var tareasPorProfesor = mutableListOf<Tarea>()
+                var materiasPorProfesor =
+                    materiasViewModel.obtenerMateriaPorIdUsuario(usuarioActual.id)
+
+                tareasFiltradas.forEach { tarea ->
+                    if (tarea.idMateria in materiasPorProfesor.map { it.id }) {
+                        tareasPorProfesor.add(tarea)
+                    }
+                }
+
+                if (tareasPorProfesor.isEmpty()) {
+                    EmptyTareasMessage()
+                } else {
+                    tareasPorProfesor.forEach { tarea ->
 
                         var completadaPorEstudiante = false
                         tarea.completadaPor.forEach {
@@ -315,3 +325,4 @@ fun TareasScreen(
         }
     }
 }
+

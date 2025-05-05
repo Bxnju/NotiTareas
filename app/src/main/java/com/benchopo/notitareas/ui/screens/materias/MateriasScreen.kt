@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.benchopo.notitareas.controller.MateriasController
 import com.benchopo.notitareas.data.model.Materia
 import com.benchopo.notitareas.data.model.Rol
 import com.benchopo.notitareas.viewModel.MateriasViewModel
@@ -276,25 +275,31 @@ fun MateriasScreen(
             HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
 
             Text("Materias registradas:", style = MaterialTheme.typography.titleMedium)
+            var materiasPorRol = mutableListOf<Materia>()
 
-            if (materias.isEmpty()) {
+            if (usuarioActual.rol == Rol.ESTUDIANTE) {
+
+                materias.forEach { materia ->
+                    if (materia.idEstudiantesInscritos.contains(usuarioActual.id)) {
+                        materiasPorRol.add(materia)
+                    }
+                }
+
+            } else if (usuarioActual.rol == Rol.PROFESOR) {
+
+                materias.forEach { materia ->
+                    if (materia.idProfesor.equals(usuarioActual.id)) {
+                        materiasPorRol.add(materia)
+                    }
+                }
+
+            }
+
+            if (materiasPorRol.isEmpty()) {
                 EmptyMateriasMessage()
             } else {
-
-                var materiasPorEstudiante = mutableListOf<Materia>()
-
-                if (usuarioActual.rol == Rol.ESTUDIANTE) {
-
-                    materias.forEach { materia ->
-                        if (materia.idEstudiantesInscritos.contains(usuarioActual.id)) {
-                            materiasPorEstudiante.add(materia)
-                        }
-                    }
-
-                } else materiasPorEstudiante = materias as MutableList<Materia>
-
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    materiasPorEstudiante.forEach { materiaItem ->
+                    materiasPorRol.forEach { materiaItem ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -351,3 +356,4 @@ fun MateriasScreen(
         }
     }
 }
+

@@ -14,9 +14,8 @@ class AuthViewModel : ViewModel() {
     var usuarioActual by mutableStateOf<Usuario?>(null)
         private set
 
-    fun login(nombre: String, password: String, rol: Rol, callback: (String?) -> Unit) {
-        val email = ""
-        UsuariosController().getUsers(nombre, password, rol) { usuarioEncontrado ->
+    fun login(email: String, password: String, rol: Rol, callback: (String?) -> Unit) {
+        UsuariosController().getUsers(email, password, rol) { usuarioEncontrado ->
             if (usuarioEncontrado == null) {
                 callback(null)
 

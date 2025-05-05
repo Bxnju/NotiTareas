@@ -17,6 +17,9 @@ class MateriasViewModel : ViewModel() {
         }
     }
 
+    fun obtenerMateriaPorIdUsuario(idUsuario: String): List<Materia> {
+        return _materias.filter { it.idProfesor == idUsuario }
+    }
 
     fun agregarMateria(titulo: String, idProfesor: String, estudiantes: MutableList<String>): String? {
         if (titulo.length > 35) return "El titulo no puede tener más de 35 caracteres."
